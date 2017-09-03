@@ -12,14 +12,15 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		let board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
+		board.center = self.view.center
+		self.view.addSubview(board)
 	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-
 
 }
 
