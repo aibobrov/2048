@@ -15,18 +15,18 @@ class Board: UIView {
 	let spaceBtwTiles: CGFloat = 15
 	let radius: CGFloat = 10.0
 
-	let tiles = [[UIView]]()
+	var tiles = [[UIView]]()
 
 	init(dimention: Int, boardSize: CGSize) {
 		guard boardSize.height == boardSize.width else {
 			fatalError("Square board!")
 		}
 		self.dimention = dimention
-		let sizeLength = (boardSize.height - spaceBtwTiles * 5) / 4
+		let sizeLength = (Double(boardSize.height) - Double(spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: boardSize))
 		setupBackGround()
-		setupTiles()
+		setupEmptyTiles()
 	}
 
 
@@ -35,20 +35,27 @@ class Board: UIView {
 		self.backgroundColor = boardColor
 	}
 
-
-	private func setupTiles() {
+	private func setupEmptyTiles() {
 		var point = CGPoint(x: spaceBtwTiles, y: spaceBtwTiles)
 		for x in 0..<dimention  {
 			point.x = spaceBtwTiles
-			for y in 0..<dimention {
-				print(point, "\(x),\(y)")
+			tiles.append([])
+			for _ in 0..<dimention {
 				let tile = Tile(radius: radius, size: tileSize, origin: point)
 				self.addSubview(tile)
+
+				tiles[x].append(tile)
 				point.x += spaceBtwTiles + tileSize.height
 			}
 			point.y += spaceBtwTiles + tileSize.height
 		}
 	}
+
+	subscript(row: Int, column: Int) -> Tile {
+		return tiles[row][column]
+	}
+
+
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")

@@ -10,16 +10,45 @@ import UIKit
 
 class ViewController: UIViewController {
 
+	var board: Board!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
+		board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
 		board.center = self.view.center
 		self.view.addSubview(board)
+		let left = UISwipeGestureRecognizer(target: self, action: #selector(swipedLeft))
+		left.direction = .left
+
+		let right = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
+		right.direction = .right
+
+		let up = UISwipeGestureRecognizer(target: self, action: #selector(swipedUp))
+		up.direction = .up
+
+		let down = UISwipeGestureRecognizer(target: self, action: #selector(swipedDown))
+		down.direction = .down
+
+		self.view.addGestureRecognizer(left)
+		self.view.addGestureRecognizer(right)
+		self.view.addGestureRecognizer(up)
+		self.view.addGestureRecognizer(down)
 	}
 
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+	@objc func swipedLeft() {
+
+	}
+
+	@objc func swipedRight() {
+
+	}
+
+	@objc func swipedUp() {
+
+	}
+
+	@objc func swipedDown() {
+		
 	}
 
 }
