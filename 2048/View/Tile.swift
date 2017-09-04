@@ -70,7 +70,6 @@ class Tile: UIView {
 		}
 	}
 
-
 	var value: Int? {
 		didSet {
 			if  let number = value, number != 0 {
@@ -92,16 +91,14 @@ class Tile: UIView {
 	let emptyColor = UIColor(white: 1.0, alpha: 0.4)
 	let label : UILabel
 
-	init(radius: CGFloat, size: CGSize, origin: CGPoint = CGPoint(x: 0, y: 0)) {
+	init(radius: CGFloat, size: CGSize, origin: CGPoint = CGPoint.zero) {
 		self.label = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
-		self.label.font = UIFont(name: "Helvetica-Bold", size: 35)
-
+		super.init(frame: CGRect(origin: origin, size: size))
 		self.label.textAlignment = .center
 		self.label.numberOfLines = 1
-		self.label.minimumScaleFactor = 10/self.label.font.pointSize
+		self.label.font = UIFont(name: "Helvetica-Bold", size: self.frame.height * 2 / 3)
+		self.label.minimumScaleFactor = 1/self.label.font.pointSize
 		self.label.adjustsFontSizeToFitWidth = true
-		
-		super.init(frame: CGRect(origin: origin, size: size))
 		self.backgroundColor = emptyColor
 		self.addSubview(label)
 		self.layer.cornerRadius = radius

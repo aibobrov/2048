@@ -12,7 +12,7 @@ class GameController {
 	let board: Board
 	var score: Int = 0 {
 		didSet {
-			delegate?.scoreDidChanged!(to: score)
+			delegate?.scoreDidChanged(to: score)
 		}
 	}
 	var delegate: GameControllerDelegate?
@@ -42,8 +42,11 @@ class GameController {
 
 	func start() {
 		reset()
-		set(value: getNewValue(), onTiles: board.emptyTiles())
-		set(value: getNewValue(), onTiles: board.emptyTiles())
+		for _ in 0...1 {
+			let newValue = getNewValue()
+			set(value: newValue, onTiles: board.emptyTiles())
+			score += newValue
+		}
 	}
 
 	func set(value: Int, onTiles tiles: [Tile]) {
@@ -54,11 +57,16 @@ class GameController {
 		tiles[Int(arc4random()) % tiles.count].value = value
 	}
 
-	 func getNewValue() -> Int {
+	func getNewValue() -> Int {
 		let rnd = arc4random() % 10
 		return rnd < 2 ? 4 : 2
 	}
+
+	func performMove() {
+
+	}
 }
+
 extension GameController {
 	func tileToLeftHasSameValue(location: (Int, Int), value: Int) -> Bool {
 		let (x, y) = location

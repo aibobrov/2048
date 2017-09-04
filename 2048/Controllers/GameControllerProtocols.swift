@@ -8,13 +8,17 @@
 
 import Foundation
 
-
 protocol GameControllerDelegate {
 	func userDidLost()
-
 	func scoreDidChanged(to score: Int)
 	func userDidWon()
+}
 
+enum MoveDirections {
+	case up
+	case down
+	case left
+	case right
 }
 
 protocol GameControllerMoveProtocol {

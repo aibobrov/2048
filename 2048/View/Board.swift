@@ -9,11 +9,12 @@
 import UIKit
 
 class Board: UIView {
+	static let boardColor = UIColor(red:0.74, green:0.68, blue:0.62, alpha:1.00)
+	static let radius: CGFloat = 7.0
+	
 	let dimention: Int
-	let boardColor = UIColor(red:0.74, green:0.68, blue:0.62, alpha:1.00)
 	let tileSize: CGSize
 	let spaceBtwTiles: CGFloat = 15
-	let radius: CGFloat = 10.0
 
 	var tiles = [Tile]()
 	var tilesPositions = [CGPoint]()
@@ -25,15 +26,15 @@ class Board: UIView {
 		self.dimention = dimention
 		let sizeLength = (Double(boardSize.height) - Double(spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
-		super.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: boardSize))
+		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
 		setupBackGround()
 		setupEmptyTiles()
 	}
 
 
 	private func setupBackGround() {
-		self.layer.cornerRadius = radius
-		self.backgroundColor = boardColor
+		self.layer.cornerRadius = Board.radius
+		self.backgroundColor = Board.boardColor
 	}
 
 	private func setupEmptyTiles() {
@@ -41,7 +42,7 @@ class Board: UIView {
 		for _ in 0..<dimention  {
 			point.x = spaceBtwTiles
 			for _ in 0..<dimention {
-				let tile = Tile(radius: radius, size: tileSize, origin: point)
+				let tile = Tile(radius: Board.radius, size: tileSize, origin: point)
 				self.addSubview(tile)
 
 				tiles.append(tile)
