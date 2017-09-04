@@ -80,6 +80,7 @@ class Tile: UIView {
 				self.label.textColor = tileTextColor
 			} else {
 				self.label.isHidden = true
+				self.backgroundColor = emptyColor
 			}
 		}
 	}

@@ -15,7 +15,8 @@ class Board: UIView {
 	let spaceBtwTiles: CGFloat = 15
 	let radius: CGFloat = 10.0
 
-	var tiles = [[UIView]]()
+	var tiles = [Tile]()
+	var tilesPositions = [CGPoint]()
 
 	init(dimention: Int, boardSize: CGSize) {
 		guard boardSize.height == boardSize.width else {
@@ -37,14 +38,15 @@ class Board: UIView {
 
 	private func setupEmptyTiles() {
 		var point = CGPoint(x: spaceBtwTiles, y: spaceBtwTiles)
-		for x in 0..<dimention  {
+		for _ in 0..<dimention  {
 			point.x = spaceBtwTiles
-			tiles.append([])
 			for _ in 0..<dimention {
 				let tile = Tile(radius: radius, size: tileSize, origin: point)
 				self.addSubview(tile)
 
-				tiles[x].append(tile)
+				tiles.append(tile)
+				tilesPositions.append(tile.frame.origin)
+				
 				point.x += spaceBtwTiles + tileSize.height
 			}
 			point.y += spaceBtwTiles + tileSize.height
@@ -52,12 +54,22 @@ class Board: UIView {
 	}
 
 	subscript(row: Int, column: Int) -> Tile {
-		return tiles[row][column]
+		return tiles[row * dimention + column]
 	}
 
 
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")
+	}
+
+	func emptyTiles() -> [Tile] {
+		var result = [Tile]()
+		for tile in tiles {
+			if tile.isEmpty {
+				result.append(tile)
+			}
+		}
+		return result
 	}
 }
