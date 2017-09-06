@@ -16,7 +16,8 @@ class Board: UIView {
 	let tileSize: CGSize
 	let spaceBtwTiles: CGFloat = 15
 
-	var tiles = [Tile]()
+	var backgroundTiles = [Tile]()
+	var tiles: [Tile?]
 	var tilesPositions = [CGPoint]()
 
 	init(dimention: Int, boardSize: CGSize) {
@@ -24,6 +25,7 @@ class Board: UIView {
 			fatalError("Square board!")
 		}
 		self.dimention = dimention
+		self.tiles = [Tile?](repeating: nil, count: dimention * dimention)
 		let sizeLength = (Double(boardSize.height) - Double(spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
@@ -42,19 +44,17 @@ class Board: UIView {
 		for _ in 0..<dimention  {
 			point.x = spaceBtwTiles
 			for _ in 0..<dimention {
-				let tile = Tile(radius: Board.radius, size: tileSize, origin: point)
-				self.addSubview(tile)
-
-				tiles.append(tile)
-				tilesPositions.append(tile.frame.origin)
-				
+				let backgroundTile = Tile(radius: Board.radius, size: tileSize, origin: point)
+				self.addSubview(backgroundTile)
+				backgroundTiles.append(backgroundTile)
+				tilesPositions.append(backgroundTile.frame.origin)
 				point.x += spaceBtwTiles + tileSize.height
 			}
 			point.y += spaceBtwTiles + tileSize.height
 		}
 	}
 
-	subscript(row: Int, column: Int) -> Tile {
+	subscript(row: Int, column: Int) -> Tile? {
 		return tiles[row * dimention + column]
 	}
 
@@ -64,11 +64,12 @@ class Board: UIView {
 		fatalError("coder isn't allowed")
 	}
 
-	func emptyTiles() -> [Tile] {
-		var result = [Tile]()
-		for tile in tiles {
-			if tile.isEmpty {
-				result.append(tile)
+	var emptyTiles: [(Tile?, CGRect)] {
+		var result = [(Tile?, CGRect)]()
+		for (index, tile) in tiles.enumerated() {
+			if tile == nil {
+				
+				result.append((tile, CGRect(origin: tilesPositions[index], size: tileSize)))
 			}
 		}
 		return result

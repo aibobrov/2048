@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class GameController {
 	let board: Board
@@ -35,8 +36,10 @@ class GameController {
 
 
 	func reset() {
-		for tile in board.tiles {
-			tile.value = nil
+		for tile in board.emptyTiles {
+			if let tile = tile.0 {
+				tile.value = nil
+			}
 		}
 	}
 
@@ -44,17 +47,22 @@ class GameController {
 		reset()
 		for _ in 0...1 {
 			let newValue = getNewValue()
-			set(value: newValue, onTiles: board.emptyTiles())
+			set(value: newValue, onTiles: board.emptyTiles)
 			score += newValue
 		}
 	}
 
-	func set(value: Int, onTiles tiles: [Tile]) {
+	func set(value: Int, onTiles tiles: [(Tile?, CGRect)]) {
 		guard  tiles.count > 0 else {
 			isGameEnded = true
 			return
 		}
-		tiles[Int(arc4random()) % tiles.count].value = value
+		let rndNumber = Int(arc4random()) % tiles.count
+		var (tile, rect) = tiles[rndNumber]
+		tile = Tile(radius: Board.radius, size: rect.size, origin: rect.origin)
+		tile?.value = value
+		board.addSubview(tile!)
+		board.bringSubview(toFront: tile!)
 	}
 
 	func getNewValue() -> Int {
@@ -73,8 +81,10 @@ extension GameController {
 		guard x != 0 else {
 			return false
 		}
-		if let first = board[x, y].value,
-			let second = board[x - 1, y].value {
+		if let firstTile = board[x, y],
+			let secondTile = board[x - 1, y],
+			let first = firstTile.value,
+			let second = secondTile.value {
 			return first == second
 		}
 		return false
@@ -85,8 +95,10 @@ extension GameController {
 		guard x != board.dimention - 1 else {
 			return false
 		}
-		if let first = board[x, y].value,
-			let second = board[x + 1, y].value {
+		if let firstTile = board[x, y],
+			let secondTile = board[x + 1, y],
+			let first = firstTile.value,
+			let second = secondTile.value {
 			return first == second
 		}
 		return false
@@ -97,8 +109,10 @@ extension GameController {
 		guard y != 0 else {
 			return false
 		}
-		if let first = board[x, y].value,
-			let second = board[x, y - 1].value {
+		if let firstTile = board[x, y],
+			let secondTile = board[x, y - 1],
+			let first = firstTile.value,
+			let second = secondTile.value {
 			return first == second
 		}
 		return false
@@ -109,8 +123,10 @@ extension GameController {
 		guard y != board.dimention - 1 else {
 			return false
 		}
-		if let first = board[x, y].value,
-			let second = board[x, y + 1].value {
+		if let firstTile = board[x, y],
+			let secondTile = board[x, y + 1],
+			let first = firstTile.value,
+			let second = secondTile.value {
 			return first == second
 		}
 		return false
