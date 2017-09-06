@@ -20,11 +20,14 @@ class Score: UIView {
 				plusScoreView.isHidden = false
 				plusScoreView.text = "+\(value - oldValue)"
 				let oldOrigin = plusScoreView.frame.origin
-				UIView.animate(withDuration: 1, animations: {
+				let oldAlpha = plusScoreView.alpha
+				UIView.animate(withDuration: 0.5, animations: {
 					self.plusScoreView.frame.origin.y = self.score.center.y + 10
+					self.plusScoreView.alpha = 0
 				}, completion: { (_) in
 					self.plusScoreView.isHidden = true
 					self.plusScoreView.frame.origin = oldOrigin
+					self.plusScoreView.alpha = oldAlpha
 				})
 			}
 		}
