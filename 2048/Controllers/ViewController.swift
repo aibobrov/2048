@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 	var board: Board!
 	var controller: GameController!
 	var score: Score!
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
@@ -26,11 +26,21 @@ class ViewController: UIViewController {
 		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 30)
 		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
 		self.view.addSubview(score)
+
+		
 		setupGestures()
 		controller.start()
 	}
 }
 extension ViewController: GameControllerDelegate {
+	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
+		
+	}
+
+	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
+
+	}
+
 	func userDidWon() {
 
 	}
@@ -63,7 +73,7 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-
+		self.scoreDidChanged(to: self.score.value * 2)
 	}
 	// MARK: right
 	@objc func swipedRight() {

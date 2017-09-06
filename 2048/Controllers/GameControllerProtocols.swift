@@ -12,6 +12,8 @@ protocol GameControllerDelegate {
 	func userDidLost()
 	func scoreDidChanged(to score: Int)
 	func userDidWon()
+	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int)
+	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int)
 }
 
 enum MoveDirections {
@@ -19,9 +21,4 @@ enum MoveDirections {
 	case down
 	case left
 	case right
-}
-
-protocol GameControllerMoveProtocol {
-	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int)
-	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int)
 }

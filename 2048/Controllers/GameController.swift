@@ -132,23 +132,3 @@ extension GameController {
 		return false
 	}
 }
-
-extension GameController: GameControllerMoveProtocol {
-
-	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
-
-	}
-	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
-
-	}
-}
-
-
-
-
-
-
-
-
-
-
