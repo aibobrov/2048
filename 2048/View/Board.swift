@@ -55,10 +55,18 @@ class Board: UIView {
 	}
 
 	subscript(row: Int, column: Int) -> Tile? {
+		guard 0..<tiles.count ~= row * dimention + column else {
+			return nil
+		}
 		return tiles[row * dimention + column]
 	}
 
-
+	func position(location: (Int, Int)) -> CGPoint? {
+		guard 0..<tilesPositions.count ~= location.0 * dimention + location.1 else {
+			return nil
+		}
+		return tilesPositions[location.0 * dimention + location.1]
+	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")

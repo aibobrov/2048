@@ -42,7 +42,7 @@ class GameController {
 			}
 		}
 	}
-
+	// FIXME: doens't restarts
 	func start() {
 		reset()
 		for _ in 0...1 {
