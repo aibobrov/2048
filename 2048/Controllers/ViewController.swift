@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
+		board = Board(dimention: 4, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
@@ -50,17 +50,12 @@ class ViewController: UIViewController {
 		
 		
 		setupGestures()
-		controller.start()
+		controller.restart()
 	}
 }
 extension ViewController: GameControllerDelegate {
 	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
-		UIView.animate(withDuration: 1, animations: {
-			guard let toPosition = self.board.position(location: to) else {
-				return
-			}
-			self.board[from.0, from.1]?.frame.origin = toPosition
-		}, completion: nil)
+
 	}
 	
 	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
@@ -96,7 +91,7 @@ extension ViewController: GameControllerDelegate {
 	}
 	
 	@objc func retryClicked() {
-		self.controller.start()
+		self.controller.restart()
 		retryView = nil
 		resultView = nil
 		print("retry")
@@ -137,34 +132,18 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-		guard resultView == nil else {
-			return
-		}
-		self.userDidLost()
-		print("left")
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		guard resultView == nil else {
-			return
-		}
-		self.userDidWon()
-		print("right")
+		controller.restart()
 	}
 	// MARK: up
 	@objc func swipedUp() {
-		guard resultView == nil else {
-			return
-		}
-		self.resultView?.isHidden = true
-		print("up")
+
 	}
 	// MARK: down
 	@objc func swipedDown() {
-		guard resultView == nil else {
-			return
-		}
-		print("down")
+		
 	}
 }
 

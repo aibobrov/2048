@@ -23,9 +23,6 @@ class GameController {
 			if !oldValue && isGameEnded {
 				delegate?.userDidLost()
 			}
-			if !isGameEnded {
-				start()
-			}
 		}
 	}
 
@@ -36,34 +33,64 @@ class GameController {
 
 
 	func reset() {
-		for tile in board.emptyTiles {
-			if let tile = tile.0 {
-				tile.value = nil
-			}
-		}
+		score = 0
+		board.tiles.forEach({ $0?.removeFromSuperview() })
+		board.tiles = board.tiles.map({ _ in nil })
 	}
-	// FIXME: doens't restarts
-	func start() {
+
+	func restart() {
 		reset()
 		for _ in 0...1 {
 			let newValue = getNewValue()
-			set(value: newValue, onTiles: board.emptyTiles)
+			// TODO: somehow board.emptyTiles as argument
+			set(newValue: newValue)
 			score += newValue
 		}
 	}
 
-	func set(value: Int, onTiles tiles: [(Tile?, CGRect)]) {
-		guard  tiles.count > 0 else {
+	func set(newValue value: Int) {
+		guard  board.emptyTiles.count > 0 else {
 			isGameEnded = true
 			return
 		}
-		let rndNumber = Int(arc4random()) % tiles.count
-		var (tile, rect) = tiles[rndNumber]
-		tile = Tile(radius: Board.radius, size: rect.size, origin: rect.origin)
+
+		var idx = Int(arc4random()) % board.tiles.count
+		while board.tiles[idx] != nil {
+			idx = Int(arc4random()) % board.tiles.count
+		}
+
+		let rect = board.tilesRects[idx]
+		setup(newTile: &board.tiles[idx], frame: rect, value: value)
+	}
+
+	func setup(newTile tile: inout Tile?, frame: CGRect, value: Int) {
+		tile = Tile(radius: Board.radius, size: frame.size, origin: frame.origin)
 		tile?.value = value
 		board.addSubview(tile!)
 		board.bringSubview(toFront: tile!)
+
+		if let tile = tile { // animation
+			let scale: CGFloat = 0.25
+			tile.transform = CGAffineTransform(scaleX: scale, y: scale)
+			tile.alpha = 0
+			UIView.animate(withDuration: 0.2, animations: {
+				tile.transform = CGAffineTransform(scaleX: 1, y: 1)
+				tile.alpha = 1.0
+			})
+		}
 	}
+
+	func check(_ tiles: [Tile?]) {
+		for (idx, tile) in tiles.enumerated() {
+			if let _ = tile {
+				print("[\(idx % board.dimention), \(idx / board.dimention)]", "not nil")
+			} else {
+				print("-[\(idx % board.dimention), \(idx / board.dimention)]", "nil")
+			}
+		}
+		print("---------------------------")
+	}
+
 
 	func getNewValue() -> Int {
 		let rnd = arc4random() % 10
