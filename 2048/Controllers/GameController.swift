@@ -42,26 +42,45 @@ class GameController {
 		reset()
 		for _ in 0...1 {
 			let newValue = getNewValue()
-			set(newValue: newValue, onTiles: &board.tiles)
+			// TODO: somehow board.emptyTiles as argument
+			set(newValue: newValue)
 			score += newValue
 		}
 	}
-
-	func set(newValue value: Int, onTiles tiles: inout [Tile?]) {
-		guard  tiles.count > 0 else {
+	func set(newValue value: Int) {
+		guard  board.emptyTiles.count > 0 else {
 			isGameEnded = true
 			return
 		}
-		var idx = Int(arc4random()) % tiles.count
-		while tiles[idx] != nil {
-			idx = Int(arc4random()) % tiles.count
+
+		var idx = Int(arc4random()) % board.tiles.count
+		while board.tiles[idx] != nil {
+			idx = Int(arc4random()) % board.tiles.count
 		}
+
 		let rect = board.tilesRects[idx]
-		tiles[idx] = Tile(radius: Board.radius, size: rect.size, origin: rect.origin)
-		tiles[idx]?.value = value
-		board.addSubview(tiles[idx]!)
-		board.bringSubview(toFront: tiles[idx]!)
-		check(tiles)
+		setup(newTile: &board.tiles[idx], frame: rect, value: value)
+	}
+
+	func setup(newTile tile: inout Tile?, frame: CGRect, value: Int) {
+		tile = Tile(radius: Board.radius, size: frame.size, origin: frame.origin)
+		tile?.value = value
+		board.addSubview(tile!)
+		board.bringSubview(toFront: tile!)
+
+		if var tile = tile { // animation
+			let center = tile.center
+			let scale: CGFloat = 0.25
+			tile.transform = CGAffineTransform(scaleX: scale, y: scale)
+			tile.center = center
+			tile.alpha = 0
+			UIView.animate(withDuration: 0.2, animations: {
+				tile.transform = CGAffineTransform(scaleX: 1, y: 1)
+				tile.alpha = 1.0
+			}, completion: {_ in
+				tile.center = center
+			})
+		}
 	}
 
 	func check(_ tiles: [Tile?]) {

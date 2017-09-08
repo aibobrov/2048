@@ -53,6 +53,9 @@ class Board: UIView {
 			point.y += Board.spaceBtwTiles + tileSize.height
 		}
 	}
+	var emptyTiles: [Tile?] {
+		return tiles.filter({$0 == nil})
+	}
 
 	subscript(row: Int, column: Int) -> Tile? {
 		guard 0..<tiles.count ~= row * dimention + column else {

@@ -97,7 +97,7 @@ class Tile: UIView {
 		self.label.textAlignment = .center
 		self.label.numberOfLines = 1
 		self.label.font = UIFont(name: "Helvetica-Bold", size: self.frame.height * 2 / 3)
-		self.label.minimumScaleFactor = 1/self.label.font.pointSize
+		self.label.minimumScaleFactor = 1 / self.label.font.pointSize
 		self.label.adjustsFontSizeToFitWidth = true
 		self.backgroundColor = emptyColor
 		self.addSubview(label)
