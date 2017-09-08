@@ -103,15 +103,7 @@ class Tile: UIView {
 		self.addSubview(label)
 		self.layer.cornerRadius = radius
 	}
-<<<<<<< develop
-
-	deinit {
-		self.removeFromSuperview()
-	}
-
-=======
 	
->>>>>>> start bug fixed
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")
 	}

@@ -64,16 +64,6 @@ class Board: UIView {
 		return tiles[row * dimention + column]
 	}
 
-<<<<<<< develop
-	func position(location: (Int, Int)) -> CGPoint? {
-		guard 0..<tilesPositions.count ~= location.0 * dimention + location.1 else {
-			return nil
-		}
-		return tilesPositions[location.0 * dimention + location.1]
-	}
-
-=======
->>>>>>> start bug fixed
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")
 	}

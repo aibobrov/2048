@@ -55,12 +55,7 @@ class ViewController: UIViewController {
 }
 extension ViewController: GameControllerDelegate {
 	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
-		UIView.animate(withDuration: 1, animations: {
-			guard let toPosition = self.board.position(location: to) else {
-				return
-			}
-			self.board[from.0, from.1]?.frame.origin = toPosition
-		}, completion: nil)
+
 	}
 	
 	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
@@ -137,41 +132,18 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-<<<<<<< develop
-		guard resultView == nil else {
-			return
-		}
-		self.userDidLost()
-		print("left")
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		guard resultView == nil else {
-			return
-		}
-		self.userDidWon()
-		print("right")
-=======
-	}
-	// MARK: right
-	@objc func swipedRight() {
-		controller.start()
->>>>>>> start bug fixed
+		controller.restart()
 	}
 	// MARK: up
 	@objc func swipedUp() {
-		guard resultView == nil else {
-			return
-		}
-		self.resultView?.isHidden = true
-		print("up")
+
 	}
 	// MARK: down
 	@objc func swipedDown() {
-		guard resultView == nil else {
-			return
-		}
-		print("down")
+		
 	}
 }
 
