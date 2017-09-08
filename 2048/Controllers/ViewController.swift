@@ -33,7 +33,13 @@ class ViewController: UIViewController {
 }
 extension ViewController: GameControllerDelegate {
 	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
-
+		print("From \(from) -> To \(to)")
+		UIView.animate(withDuration: 0.2, animations: {
+			guard let toRect = self.board.tileRect(location: to) else {
+				return
+			}
+			self.board[from.0, from.1]?.frame = toRect
+		}, completion: nil)
 	}
 	
 	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
@@ -76,10 +82,11 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
+		controller.restart()
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		controller.restart()
+		controller.move(to: .right)
 	}
 	// MARK: up
 	@objc func swipedUp() {

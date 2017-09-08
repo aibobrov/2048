@@ -29,6 +29,7 @@ class Board: UIView {
 		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
+
 		setupBackGround()
 		setupEmptyTiles()
 	}
@@ -53,18 +54,31 @@ class Board: UIView {
 			point.y += Board.spaceBtwTiles + tileSize.height
 		}
 	}
+	
 	var emptyTiles: [Tile?] {
 		return tiles.filter({$0 == nil})
 	}
 
 	subscript(row: Int, column: Int) -> Tile? {
-		guard 0..<tiles.count ~= row * dimention + column else {
+		guard (row, column) ~= self else {
 			return nil
 		}
 		return tiles[row * dimention + column]
 	}
 
+	func tileRect(location: (Int, Int)) -> CGRect? {
+		guard location ~= self else {
+			return nil
+		}
+		return tilesRects[location.0 * dimention + location.1]
+	}
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")
+	}
+
+	static func ~=(location: (Int, Int), board: Board) -> Bool {
+		let (x, y) = location
+		return 0..<board.dimention ~= x && 0..<board.dimention ~= y
 	}
 }

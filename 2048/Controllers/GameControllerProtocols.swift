@@ -16,9 +16,10 @@ protocol GameControllerDelegate {
 	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int)
 }
 
-enum MoveDirections {
+enum MoveDirection {
 	case up
 	case down
 	case left
 	case right
 }
+
