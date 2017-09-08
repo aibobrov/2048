@@ -14,11 +14,11 @@ class Board: UIView {
 	
 	let dimention: Int
 	let tileSize: CGSize
-	let spaceBtwTiles: CGFloat = 15
+	static let spaceBtwTiles: CGFloat = 15
 
 	var backgroundTiles = [Tile]()
 	var tiles: [Tile?]
-	var tilesPositions = [CGPoint]()
+	var tilesRects = [CGRect]()
 
 	init(dimention: Int, boardSize: CGSize) {
 		guard boardSize.height == boardSize.width else {
@@ -26,7 +26,7 @@ class Board: UIView {
 		}
 		self.dimention = dimention
 		self.tiles = [Tile?](repeating: nil, count: dimention * dimention)
-		let sizeLength = (Double(boardSize.height) - Double(spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
+		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
 		setupBackGround()
@@ -40,17 +40,17 @@ class Board: UIView {
 	}
 
 	private func setupEmptyTiles() {
-		var point = CGPoint(x: spaceBtwTiles, y: spaceBtwTiles)
+		var point = CGPoint(x: Board.spaceBtwTiles, y: Board.spaceBtwTiles)
 		for _ in 0..<dimention  {
-			point.x = spaceBtwTiles
+			point.x = Board.spaceBtwTiles
 			for _ in 0..<dimention {
 				let backgroundTile = Tile(radius: Board.radius, size: tileSize, origin: point)
 				self.addSubview(backgroundTile)
 				backgroundTiles.append(backgroundTile)
-				tilesPositions.append(backgroundTile.frame.origin)
-				point.x += spaceBtwTiles + tileSize.height
+				tilesRects.append(backgroundTile.frame)
+				point.x += Board.spaceBtwTiles + tileSize.height
 			}
-			point.y += spaceBtwTiles + tileSize.height
+			point.y += Board.spaceBtwTiles + tileSize.height
 		}
 	}
 
@@ -61,6 +61,7 @@ class Board: UIView {
 		return tiles[row * dimention + column]
 	}
 
+<<<<<<< develop
 	func position(location: (Int, Int)) -> CGPoint? {
 		guard 0..<tilesPositions.count ~= location.0 * dimention + location.1 else {
 			return nil
@@ -68,18 +69,9 @@ class Board: UIView {
 		return tilesPositions[location.0 * dimention + location.1]
 	}
 
+=======
+>>>>>>> start bug fixed
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("coder isn't allowed")
-	}
-
-	var emptyTiles: [(Tile?, CGRect)] {
-		var result = [(Tile?, CGRect)]()
-		for (index, tile) in tiles.enumerated() {
-			if tile == nil {
-				
-				result.append((tile, CGRect(origin: tilesPositions[index], size: tileSize)))
-			}
-		}
-		return result
 	}
 }

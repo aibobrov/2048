@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		board = Board(dimention: 4, boardSize: CGSize(width: 343, height: 343))
+		board = Board(dimention: 4, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
@@ -137,6 +137,7 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
+<<<<<<< develop
 		guard resultView == nil else {
 			return
 		}
@@ -150,6 +151,12 @@ extension ViewController {
 		}
 		self.userDidWon()
 		print("right")
+=======
+	}
+	// MARK: right
+	@objc func swipedRight() {
+		controller.start()
+>>>>>>> start bug fixed
 	}
 	// MARK: up
 	@objc func swipedUp() {
