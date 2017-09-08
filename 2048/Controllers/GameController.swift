@@ -37,8 +37,8 @@ class GameController {
 		board.tiles.forEach({ $0?.removeFromSuperview() })
 		board.tiles = board.tiles.map({ _ in nil })
 	}
-	// FIXME: doens't restarts
-	func start() {
+
+	func restart() {
 		reset()
 		for _ in 0...1 {
 			let newValue = getNewValue()
@@ -47,6 +47,7 @@ class GameController {
 			score += newValue
 		}
 	}
+
 	func set(newValue value: Int) {
 		guard  board.emptyTiles.count > 0 else {
 			isGameEnded = true
@@ -68,17 +69,13 @@ class GameController {
 		board.addSubview(tile!)
 		board.bringSubview(toFront: tile!)
 
-		if var tile = tile { // animation
-			let center = tile.center
+		if let tile = tile { // animation
 			let scale: CGFloat = 0.25
 			tile.transform = CGAffineTransform(scaleX: scale, y: scale)
-			tile.center = center
 			tile.alpha = 0
 			UIView.animate(withDuration: 0.2, animations: {
 				tile.transform = CGAffineTransform(scaleX: 1, y: 1)
 				tile.alpha = 1.0
-			}, completion: {_ in
-				tile.center = center
 			})
 		}
 	}

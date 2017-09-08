@@ -50,7 +50,7 @@ class ViewController: UIViewController {
 		
 		
 		setupGestures()
-		controller.start()
+		controller.restart()
 	}
 }
 extension ViewController: GameControllerDelegate {
@@ -96,7 +96,7 @@ extension ViewController: GameControllerDelegate {
 	}
 	
 	@objc func retryClicked() {
-		self.controller.start()
+		self.controller.restart()
 		retryView = nil
 		resultView = nil
 		print("retry")
