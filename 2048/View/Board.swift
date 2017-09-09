@@ -66,11 +66,23 @@ class Board: UIView {
 		return tiles[row * dimention + column]
 	}
 
+	subscript(index: Int) -> Tile? {
+		guard 0..<tiles.count ~= index else {
+			return nil
+		}
+		return tiles[index]
+	}
+
 	func tileRect(location: (Int, Int)) -> CGRect? {
 		guard location ~= self else {
 			return nil
 		}
 		return tilesRects[location.0 * dimention + location.1]
+	}
+
+	func removeFromBoard(at index: Int) {
+		self.tiles[index]?.removeFromSuperview()
+		self.tiles[index] = nil
 	}
 
 	required init?(coder aDecoder: NSCoder) {
