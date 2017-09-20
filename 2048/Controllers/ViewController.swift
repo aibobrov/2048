@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 	var board: Board!
-	var controller: GameController!
+	var controller: GameLogicController!
 	var score: Score!
 
 	override func viewDidLoad() {
@@ -19,11 +19,11 @@ class ViewController: UIViewController {
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
-		controller = GameController(board: board)
+		controller = GameLogicController(board: board)
 		controller.delegate = self
 		
 		let scoreSize = CGSize(width: 100, height: 70)
-		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 30)
+		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 50)
 		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
 		self.view.addSubview(score)
 

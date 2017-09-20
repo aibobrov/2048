@@ -70,11 +70,11 @@ class Tile: UIView {
 		}
 	}
 
-	var value: Int? {
+	var value: Int {
 		didSet {
-			if  let number = value, number != 0 {
+			if value != 0 {
 				self.label.isHidden = false
-				self.label.text = String(number)
+				self.label.text = String(value)
 				self.backgroundColor = tileColor
 				self.label.textColor = tileTextColor
 			} else {
@@ -84,6 +84,8 @@ class Tile: UIView {
 		}
 	}
 
+	var position: Position
+
 	var isEmpty: Bool {
 		return value == nil || value == 0
 	}
@@ -91,8 +93,24 @@ class Tile: UIView {
 	let emptyColor = UIColor(white: 1.0, alpha: 0.4)
 	let label : UILabel
 
-	init(radius: CGFloat, size: CGSize, origin: CGPoint = CGPoint.zero) {
+	init(size: CGSize) {
 		self.label = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
+		self.position = Position.Nil
+		super.init(frame: CGRect(origin: CGPoint.zero, size: size))
+		self.label.textAlignment = .center
+		self.label.numberOfLines = 1
+		self.label.font = UIFont(name: "Helvetica-Bold", size: self.frame.height * 2 / 3)
+		self.label.minimumScaleFactor = 1 / self.label.font.pointSize
+		self.label.adjustsFontSizeToFitWidth = true
+		self.backgroundColor = emptyColor
+		self.addSubview(label)
+		self.layer.cornerRadius = Board.radius
+		self.isHidden = true
+	}
+
+	init(position: Position, size: CGSize, origin: CGPoint = CGPoint.zero) {
+		self.label = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
+		self.position = position
 		super.init(frame: CGRect(origin: origin, size: size))
 		self.label.textAlignment = .center
 		self.label.numberOfLines = 1
@@ -101,7 +119,7 @@ class Tile: UIView {
 		self.label.adjustsFontSizeToFitWidth = true
 		self.backgroundColor = emptyColor
 		self.addSubview(label)
-		self.layer.cornerRadius = radius
+		self.layer.cornerRadius = Board.radius
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

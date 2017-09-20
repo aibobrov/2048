@@ -16,8 +16,7 @@ class Board: UIView {
 	let tileSize: CGSize
 	static let spaceBtwTiles: CGFloat = 15
 
-	var backgroundTiles = [Tile]()
-	var tiles: [Tile?]
+	var tiles: [Tile]
 	var tilesRects = [CGRect]()
 
 	init(dimention: Int, boardSize: CGSize) {
@@ -25,9 +24,10 @@ class Board: UIView {
 			fatalError("Square board!")
 		}
 		self.dimention = dimention
-		self.tiles = [Tile?](repeating: nil, count: dimention * dimention)
+
 		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
+		self.tiles = [Tile](repeating: Tile(tileSize), count: dimention * dimention)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
 
 		setupBackGround()
@@ -42,47 +42,32 @@ class Board: UIView {
 
 	private func setupEmptyTiles() {
 		var point = CGPoint(x: Board.spaceBtwTiles, y: Board.spaceBtwTiles)
-		for _ in 0..<dimention  {
+		for x in 0..<dimention  {
 			point.x = Board.spaceBtwTiles
-			for _ in 0..<dimention {
-				let backgroundTile = Tile(radius: Board.radius, size: tileSize, origin: point)
+			for y in 0..<dimention {
+				let backgroundTile = Tile(position: Position(x, y), size: tileSize, origin: point)
 				self.addSubview(backgroundTile)
-				backgroundTiles.append(backgroundTile)
 				tilesRects.append(backgroundTile.frame)
 				point.x += Board.spaceBtwTiles + tileSize.height
 			}
 			point.y += Board.spaceBtwTiles + tileSize.height
 		}
 	}
-	
-	var emptyTiles: [Tile?] {
-		return tiles.filter({$0 == nil})
-	}
-
-	subscript(row: Int, column: Int) -> Tile? {
-		guard (row, column) ~= self else {
-			return nil
-		}
+	subscript(row: Int, column: Int) -> Tile {
 		return tiles[row * dimention + column]
 	}
 
 	subscript(index: Int) -> Tile? {
-		guard 0..<tiles.count ~= index else {
-			return nil
-		}
 		return tiles[index]
 	}
 
 	func tileRect(location: (Int, Int)) -> CGRect? {
-		guard location ~= self else {
-			return nil
-		}
 		return tilesRects[location.0 * dimention + location.1]
 	}
 
 	func removeFromBoard(at index: Int) {
-		self.tiles[index]?.removeFromSuperview()
-		self.tiles[index] = nil
+		self.tiles[index].removeFromSuperview()
+		self.tiles[index].
 	}
 
 	required init?(coder aDecoder: NSCoder) {
