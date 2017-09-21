@@ -8,12 +8,13 @@
 
 import Foundation
 
-protocol GameControllerDelegate {
+protocol GameLogicManagerDelegate {
 	func userDidLost()
 	func scoreDidChanged(to score: Int)
 	func userDidWon()
-	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int)
-	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int)
+	func didCreatedTile(_ tile: Tile?)
+	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping ()->Void)
+	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping ()->Void)
 }
 
 enum MoveDirection {
@@ -22,4 +23,3 @@ enum MoveDirection {
 	case left
 	case right
 }
-

@@ -11,23 +11,16 @@ import UIKit
 class EmptyTile: UIView {
 	var position: Position
 
-	let emptyColor: UIColor = UIColor(white: 1.0, alpha: 0.4)
-
-	init(size: CGSize) {
-		self.position = Position.Nil
-		super.init(frame: CGRect(origin: CGPoint.zero, size: size))
-		self.backgroundColor = emptyColor
-		self.layer.cornerRadius = Board.radius
-	}
-
-	init(position: Position, size: CGSize, origin: CGPoint = CGPoint.zero) {
+	init(position: Position, frame: CGRect) {
 		self.position = position
-		super.init(frame: CGRect(origin: origin, size: size))
-		self.backgroundColor = emptyColor
-		self.layer.cornerRadius = Board.radius
+		super.init(frame: frame)
+		self.backgroundColor = App.tile(value: nil).color
+		self.layer.cornerRadius = 7.0
 	}
-	
+
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+
 }
