@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class GameLogicManager {
-//	private
+	//	private
 	var tiles = [Tile]()
 	var dimentions: Int
 	private var winTileValue: Int
@@ -113,7 +113,7 @@ class GameLogicManager {
 
 			let right = Position(tile.position.x + 1, tile.position.y)
 			tile.rightTile = tiles.filter({$0.position == right}).first
-//			print("Tile:: \(tile.position.ToString()) ::[\(tile.upTile?.position.ToString()), \(tile.bottomTile?.position.ToString()), \(tile.leftTile?.position.ToString()), \(tile.rightTile?.position.ToString())]")
+			//			print("Tile:: \(tile.position.ToString()) ::[\(tile.upTile?.position.ToString()), \(tile.bottomTile?.position.ToString()), \(tile.leftTile?.position.ToString()), \(tile.rightTile?.position.ToString())]")
 		}
 
 	}
@@ -130,12 +130,12 @@ class GameLogicManager {
 		var performedShift = false
 		for rowOrColumn in 0..<dimentions {
 			var tilesToCheck = tiles.filter {
-				return ((direction == .right || direction == .left) ? $0.position.y : $0.position.x) == rowOrColumn
-//				return ((direction == .right || direction == .left) ? $0.position.x : $0.position.y) == rowOrColumn
+				return ((direction == .right || direction == .left) ? $0.position.x : $0.position.y) == rowOrColumn
 			}
 			if direction == .right || direction == .down {
 				tilesToCheck = tilesToCheck.reversed()
 			}
+
 
 			var tileIndex = 0
 			while tileIndex < tilesToCheck.count {
@@ -143,10 +143,10 @@ class GameLogicManager {
 				let filter: ((_ tile: Tile) -> Bool) = { tile in
 					let position: Bool = {
 						switch direction {
-							case .up: return tile.position.y > currentTile.position.y
-							case .right: return tile.position.x < currentTile.position.x
-							case .down: return tile.position.y < currentTile.position.y
-							case .left: return tile.position.x > currentTile.position.x
+						case .up: return tile.position.x > currentTile.position.y
+						case .right: return tile.position.y < currentTile.position.y
+						case .down: return tile.position.x < currentTile.position.x
+						case .left: return tile.position.y > currentTile.position.y
 						}
 					}()
 					return position && tile.value != nil

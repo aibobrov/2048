@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 	var board: Board!
 	var manager: GameLogicManager!
 	var score: Score!
+	var highScore: HighScore!
 	var renderer: GameBoardRenderer!
 
 	override func viewDidLoad() {
@@ -26,10 +27,15 @@ class ViewController: UIViewController {
 
 		renderer = GameBoardRenderer(board: board)
 
+		let offset: CGFloat = 15
 		let scoreSize = CGSize(width: 100, height: 70)
 		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 50)
 		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
 		self.view.addSubview(score)
+
+		let highScorePoint = CGPoint(x: scorePoint.x - scoreSize.width - offset, y: scorePoint.y)
+		highScore = HighScore(frame: CGRect(origin: highScorePoint, size: scoreSize))
+		self.view.addSubview(highScore!)
 
 		setupGestures()
 		manager.start()
@@ -43,6 +49,9 @@ extension ViewController: GameLogicManagerDelegate {
 
 	func scoreDidChanged(to score: Int) {
 		self.score.value = score
+		if highScore.value < score {
+			self.highScore.value = score
+		}
 	}
 
 	func userDidWon() {
@@ -53,17 +62,14 @@ extension ViewController: GameLogicManagerDelegate {
 		guard let tile = tile else {
 			return
 		}
-//		print("Created on Position: \(tile.position.ToString())")
 		renderer.add(tile: tile)
 	}
 
 	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping () -> Void) {
-//		print("Move from \(source.position.ToString()) to \(destination.position.ToString())")
 		renderer.move(from: source, to: destination, completion: completion)
 	}
 
 	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping () -> Void) {
-//		print("Move from \(source.position.ToString()) to \(destination.ToString())")
 		renderer.move(from: source, to: destination, completion: completion)
 	}
 
@@ -89,39 +95,21 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-		checkValues()
-		manager.shift(to: .up)
-		checkValues()
+		manager.shift(to: .left)
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		checkValues()
-		manager.shift(to: .down)
-		checkValues()
+		manager.shift(to: .right)
 	}
 	// MARK: up
 	@objc func swipedUp() {
-		checkValues()
-		manager.shift(to: .left)
-		checkValues()
+		manager.shift(to: .up)
 	}
 	// MARK: down
 	@objc func swipedDown() {
-		checkValues()
-		manager.shift(to: .right)
-		checkValues()
+		manager.shift(to: .down)
 	}
 
-
-	func checkValues() {
-		for tile in manager.tiles {
-			print("Tile:: \(tile.position), \(tile.value ?? -1)")
-		}
-		print()
-		for view in renderer.tileViews {
-			print("View:: \(view.position) \(view.value)")
-		}
-	}
 }
 
 
