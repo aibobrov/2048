@@ -12,18 +12,18 @@ class Board: UIView {
 	static let boardColor = UIColor(red:0.74, green:0.68, blue:0.62, alpha:1.00)
 	static let radius: CGFloat = 7.0
 	
-	let dimention: Int
+	let dimension: Int
 	let tileSize: CGSize
 	static let spaceBtwTiles: CGFloat = 15
 	var tileRects = [CGRect]()
 
-	init(dimention: Int, boardSize: CGSize) {
+	init(dimension: Int, boardSize: CGSize) {
 		guard boardSize.height == boardSize.width else {
 			fatalError("Square board!")
 		}
-		self.dimention = dimention
+		self.dimension = dimension
 
-		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimention + 1)) / Double(self.dimention)
+		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimension + 1)) / Double(self.dimension)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
 
@@ -39,9 +39,9 @@ class Board: UIView {
 
 	private func setupEmptyTiles() {
 		var point = CGPoint(x: Board.spaceBtwTiles, y: Board.spaceBtwTiles)
-		for x in 0..<dimention  {
+		for x in 0..<dimension  {
 			point.x = Board.spaceBtwTiles
-			for y in 0..<dimention {
+			for y in 0..<dimension {
 				let backgroundTile = EmptyTile(position: Position(x, y), frame: CGRect(origin: point, size: tileSize))
 				self.addSubview(backgroundTile)
 				tileRects.append(backgroundTile.frame)
@@ -53,7 +53,7 @@ class Board: UIView {
 	}
 
 	func positionRect(position: Position) -> CGRect {
-		return tileRects[position.x * dimention + position.y]
+		return tileRects[position.x * dimension + position.y]
 	}
 
 	required init?(coder aDecoder: NSCoder) {

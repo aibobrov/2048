@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-//	var board: Board!
 	var manager: GameLogicManager!
 	var score: Score!
 	var highScore: HighScore!
@@ -18,12 +17,12 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let dimentions = 4
-		let board = Board(dimention: dimentions, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
+		let dimension = 4
+		let board = Board(dimension: dimension, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
-		manager = GameLogicManager(dimentions: dimentions, winValue: 2048)
+		manager = GameLogicManager(dimension: dimension, winValue: 2048)
 		manager.delegate = self
 
 		renderer = GameBoardRenderer(board: board)

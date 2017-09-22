@@ -15,7 +15,7 @@ class GameLogicManager {
 			refreshNeighborTiles()
 		}
 	}
-	var dimentions: Int
+	var dimension: Int
 	private var winTileValue: Int
 
 	var score: Int = 0 {
@@ -51,8 +51,8 @@ class GameLogicManager {
 		return rnd < 2 ? 4 : 2
 	}
 
-	init(dimentions: Int, winValue: Int) {
-		self.dimentions = dimentions
+	init(dimension: Int, winValue: Int) {
+		self.dimension = dimension
 		self.winTileValue = winValue
 		start()
 	}
@@ -62,8 +62,8 @@ class GameLogicManager {
 		isUserWon = false
 		isUserLost = false
 		tiles.removeAll(keepingCapacity: true)
-		for row in 0..<dimentions {
-			for column in 0..<dimentions {
+		for row in 0..<dimension {
+			for column in 0..<dimension {
 				tiles.append(Tile(position: Position( row, column)))
 			}
 		}
@@ -130,7 +130,7 @@ class GameLogicManager {
 		var waitForSignalToContinue = false
 
 		var performedShift = false
-		for rowOrColumn in 0..<dimentions {
+		for rowOrColumn in 0..<dimension {
 			var tilesToCheck = tiles.filter {
 				return ((direction == .right || direction == .left) ? $0.position.x : $0.position.y) == rowOrColumn
 			}
