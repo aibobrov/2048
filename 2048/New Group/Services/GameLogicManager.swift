@@ -10,8 +10,11 @@ import Foundation
 import UIKit
 
 class GameLogicManager {
-	//	private
-	var tiles = [Tile]()
+	private var tiles = [Tile]() {
+		didSet {
+			refreshNeighborTiles()
+		}
+	}
 	var dimentions: Int
 	private var winTileValue: Int
 
@@ -113,7 +116,6 @@ class GameLogicManager {
 
 			let right = Position(tile.position.x + 1, tile.position.y)
 			tile.rightTile = tiles.filter({$0.position == right}).first
-			//			print("Tile:: \(tile.position.ToString()) ::[\(tile.upTile?.position.ToString()), \(tile.bottomTile?.position.ToString()), \(tile.leftTile?.position.ToString()), \(tile.rightTile?.position.ToString())]")
 		}
 
 	}

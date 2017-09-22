@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	var board: Board!
+//	var board: Board!
 	var manager: GameLogicManager!
 	var score: Score!
 	var highScore: HighScore!
@@ -17,8 +17,9 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
 		let dimentions = 4
-		board = Board(dimention: dimentions, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
+		let board = Board(dimention: dimentions, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
@@ -44,7 +45,12 @@ class ViewController: UIViewController {
 
 extension ViewController: GameLogicManagerDelegate {
 	func userDidLost() {
-		print("User lost")
+		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
+			self.renderer.reset()
+			self.manager.start()
+		}))
+		self.present(alert, animated: true, completion: nil)
 	}
 
 	func scoreDidChanged(to score: Int) {
@@ -55,7 +61,9 @@ extension ViewController: GameLogicManagerDelegate {
 	}
 
 	func userDidWon() {
-		print("User won")
+		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+		self.present(alert, animated: true, completion: nil)
 	}
 
 	func didCreatedTile(_ tile: Tile?) {
@@ -72,8 +80,6 @@ extension ViewController: GameLogicManagerDelegate {
 	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping () -> Void) {
 		renderer.move(from: source, to: destination, completion: completion)
 	}
-
-
 }
 
 // MARK: Gestures

@@ -24,6 +24,7 @@
 		A1F789201F74610C00A60F2D /* GameBoardRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7891B1F74610C00A60F2D /* GameBoardRenderer.swift */; };
 		A1F789231F74621E00A60F2D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F789221F74621D00A60F2D /* Tile.swift */; };
 		A1F789251F75B59B00A60F2D /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F789241F75B59B00A60F2D /* HighScore.swift */; };
+		A1F789271F75BE7A00A60F2D /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F789261F75BE7A00A60F2D /* ModelController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		A1F7891B1F74610C00A60F2D /* GameBoardRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardRenderer.swift; sourceTree = "<group>"; };
 		A1F789221F74621D00A60F2D /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		A1F789241F75B59B00A60F2D /* HighScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
+		A1F789261F75BE7A00A60F2D /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				A19470791F5B586600D13CA2 /* _048.xcdatamodeld */,
+				A1F789261F75BE7A00A60F2D /* ModelController.swift */,
 				A1F788FA1F73081C00A60F2D /* Position.swift */,
 				A1F789221F74621D00A60F2D /* Tile.swift */,
 			);
@@ -219,6 +222,7 @@
 				A1F789201F74610C00A60F2D /* GameBoardRenderer.swift in Sources */,
 				A1F7891C1F74610C00A60F2D /* TileView.swift in Sources */,
 				A1F789231F74621E00A60F2D /* Tile.swift in Sources */,
+				A1F789271F75BE7A00A60F2D /* ModelController.swift in Sources */,
 				A1DE7F771F5DEFF8002DF9B2 /* Score.swift in Sources */,
 				A19470971F5DCB7C00D13CA2 /* GameLogicManagerDelegate.swift in Sources */,
 				A1F789251F75B59B00A60F2D /* HighScore.swift in Sources */,

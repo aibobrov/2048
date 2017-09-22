@@ -11,8 +11,7 @@ import UIKit
 
 class GameBoardRenderer {
 	var board: Board
-//	private
-	var tileViews = [TileView]()
+	private var tileViews = [TileView]()
 	init(board: Board) {
 		self.board = board
 	}

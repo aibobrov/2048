@@ -19,7 +19,6 @@ class HighScore: Score {
 				UserDefaults.standard.set(newValue, forKey: Key.highScore.rawValue)
 			}
 		}
-
 		didSet {
 			super.value = value
 		}
