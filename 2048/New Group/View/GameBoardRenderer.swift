@@ -11,7 +11,8 @@ import UIKit
 
 class GameBoardRenderer {
 	var board: Board
-	private var tileViews = [TileView]()
+//	private
+	var tileViews = [TileView]()
 	init(board: Board) {
 		self.board = board
 	}
@@ -20,16 +21,11 @@ class GameBoardRenderer {
 		for view in tileViews {
 			view.removeFromSuperview()
 		}
-		tileViews.removeAll(keepingCapacity: true)
+		tileViews.removeAll(keepingCapacity: false)
 	}
 
-
-	func moveTile(sourceTile: Tile, to destinationTile: Tile, completion: @escaping () -> Void) {
+	func move(from sourceTile: Tile, to destinationTile: Tile, completion: @escaping () -> Void) {
 		let sourceTileView = tileViews.filter({$0.position == sourceTile.position}).first!
-		print(destinationTile.position)
-		print("\(tileViews.count) \(tileViews.capacity)")
-		tileViews.forEach({print($0.position)})
-		print("End")
 		let destinationTileView = tileViews.filter({$0.position == destinationTile.position}).first!
 		board.bringSubview(toFront: sourceTileView)
 
@@ -40,6 +36,16 @@ class GameBoardRenderer {
 
 			sourceTileView.value = destinationTile.value!
 		}) { (finished) -> Void in
+			guard finished else {
+				return
+			}
+
+			UIView.animate(withDuration: 0.05, animations: {
+				sourceTileView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+			}, completion: { finished in
+				sourceTileView.transform = CGAffineTransform.identity
+			})
+
 			destinationTileView.alpha = 0
 			destinationTileView.removeFromSuperview()
 			if let index = self.tileViews.index(of: destinationTileView) {
@@ -49,9 +55,9 @@ class GameBoardRenderer {
 		}
 	}
 
-	func moveTile(tile: Tile, to position: Position, completion: @escaping () -> Void) {
+	func move(from tile: Tile, to position: Position, completion: @escaping () -> Void) {
 		let tileView = tileViews.filter({$0.position == tile.position}).first!
-		UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+		UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
 			tileView.frame.origin = self.board.positionRect(position: position).origin
 			tileView.position = position
 		}) { _ in

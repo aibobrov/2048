@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 	var board: Board!
 	var manager: GameLogicManager!
 	var score: Score!
+	var renderer: GameBoardRenderer!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -22,6 +23,8 @@ class ViewController: UIViewController {
 		
 		manager = GameLogicManager(dimentions: dimentions, winValue: 2048)
 		manager.delegate = self
+
+		renderer = GameBoardRenderer(board: board)
 
 		let scoreSize = CGSize(width: 100, height: 70)
 		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 50)
@@ -47,16 +50,21 @@ extension ViewController: GameLogicManagerDelegate {
 	}
 
 	func didCreatedTile(_ tile: Tile?) {
-		// renderer
-		print("Created on Position: \(tile?.position.ToString())")
+		guard let tile = tile else {
+			return
+		}
+//		print("Created on Position: \(tile.position.ToString())")
+		renderer.add(tile: tile)
 	}
 
 	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping () -> Void) {
-		print("Move from \(source.position.ToString()) to \(destination.position.ToString())")
+//		print("Move from \(source.position.ToString()) to \(destination.position.ToString())")
+		renderer.move(from: source, to: destination, completion: completion)
 	}
 
 	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping () -> Void) {
-		print("Move from \(source.position.ToString()) to \(destination.ToString())")
+//		print("Move from \(source.position.ToString()) to \(destination.ToString())")
+		renderer.move(from: source, to: destination, completion: completion)
 	}
 
 
@@ -81,19 +89,38 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-		manager.shift(to: .left)
+		checkValues()
+		manager.shift(to: .up)
+		checkValues()
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		manager.shift(to: .right)
+		checkValues()
+		manager.shift(to: .down)
+		checkValues()
 	}
 	// MARK: up
 	@objc func swipedUp() {
-		manager.shift(to: .up)
+		checkValues()
+		manager.shift(to: .left)
+		checkValues()
 	}
 	// MARK: down
 	@objc func swipedDown() {
-		manager.shift(to: .down)
+		checkValues()
+		manager.shift(to: .right)
+		checkValues()
+	}
+
+
+	func checkValues() {
+		for tile in manager.tiles {
+			print("Tile:: \(tile.position), \(tile.value ?? -1)")
+		}
+		print()
+		for view in renderer.tileViews {
+			print("View:: \(view.position) \(view.value)")
+		}
 	}
 }
 

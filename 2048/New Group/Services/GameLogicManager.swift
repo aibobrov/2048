@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 class GameLogicManager {
-	private var tiles = [Tile]()
+//	private
+	var tiles = [Tile]()
 	var dimentions: Int
 	private var winTileValue: Int
 
@@ -60,7 +61,7 @@ class GameLogicManager {
 		tiles.removeAll(keepingCapacity: true)
 		for row in 0..<dimentions {
 			for column in 0..<dimentions {
-				tiles.append(Tile(position: Position(row, column)))
+				tiles.append(Tile(position: Position( row, column)))
 			}
 		}
 		refreshNeighborTiles()
@@ -91,7 +92,6 @@ class GameLogicManager {
 				return false
 			}
 		}
-		isUserLost = true
 		return true
 	}
 
@@ -131,6 +131,7 @@ class GameLogicManager {
 		for rowOrColumn in 0..<dimentions {
 			var tilesToCheck = tiles.filter {
 				return ((direction == .right || direction == .left) ? $0.position.y : $0.position.x) == rowOrColumn
+//				return ((direction == .right || direction == .left) ? $0.position.x : $0.position.y) == rowOrColumn
 			}
 			if direction == .right || direction == .down {
 				tilesToCheck = tilesToCheck.reversed()
