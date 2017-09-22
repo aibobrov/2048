@@ -67,6 +67,9 @@ class Score: UIView {
 		label.textAlignment = .center
 		label.textColor = UIColor(red:0.91, green:0.87, blue:0.82, alpha:1.00)
 		label.font = UIFont(name: "Helvetica-Bold", size: 20)
+		label.numberOfLines = 1
+		label.minimumScaleFactor = 10 / self.label.font.pointSize
+		label.adjustsFontSizeToFitWidth = true
 	}
 
 	private func setupScore() {
@@ -75,7 +78,7 @@ class Score: UIView {
 		score.textColor = .white
 		score.font = UIFont(name: "Helvetica-Bold", size: 30)
 		score.numberOfLines = 1
-		score.minimumScaleFactor = 10/self.label.font.pointSize
+		score.minimumScaleFactor = 10 / self.label.font.pointSize
 		score.adjustsFontSizeToFitWidth = true
 	}
 

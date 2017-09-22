@@ -9,77 +9,75 @@
 import UIKit
 
 class ViewController: UIViewController {
-	var board: Board!
-	var controller: GameLogicController!
+	var manager: GameLogicManager!
 	var score: Score!
+	var highScore: HighScore!
+	var renderer: GameBoardRenderer!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		board = Board(dimention: 4, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
+
+		let dimension = 4
+		let board = Board(dimension: dimension, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
-		controller = GameLogicController(board: board)
-		controller.delegate = self
-		
+		manager = GameLogicManager(dimension: dimension, winValue: 2048)
+		manager.delegate = self
+
+		renderer = GameBoardRenderer(board: board)
+
+		let offset: CGFloat = 15
 		let scoreSize = CGSize(width: 100, height: 70)
 		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 50)
 		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
 		self.view.addSubview(score)
 
+		let highScorePoint = CGPoint(x: scorePoint.x - scoreSize.width - offset, y: scorePoint.y)
+		highScore = HighScore(frame: CGRect(origin: highScorePoint, size: scoreSize))
+		self.view.addSubview(highScore!)
+
 		setupGestures()
-		controller.restart()
-	}
-	@IBAction func restartButtonClicked(_ sender: UIButton) {
-		controller.restart()
+		manager.start()
 	}
 }
-extension ViewController: GameControllerDelegate {
-	func moveOneTile(from: (Int, Int), to: (Int, Int), value: Int) {
-		UIView.animate(withDuration: 0.1,  delay: 0.01 * Double(from.1), options: .curveEaseOut, animations: {
-			guard let toRect = self.board.tileRect(location: to) else {
-				return
-			}
-			self.board[from.0, from.1]?.frame = toRect
-		}, completion: { finished in
-//			//print(finished, "From \(from) To \(to)")
-		})
-	}
-	
-	func moveTwoTiles(from: ((Int, Int), (Int, Int)), to: (Int, Int), value: Int) {
-		let (x1, y1) = from.0
-		let (x2, y2) = from.1
-		UIView.animate(withDuration: 0.2, animations: {
-			guard let toRect = self.board.tileRect(location: to) else {
-				return
-			}
-			self.board[x1, y1]?.frame = toRect
-			self.board[x2, y2]?.frame = toRect
-		}, completion: { finished in
-//			//print(finished, "From [\(from.0), \(from.1)] To \(to)")
-			guard finished else {
-				return
-			}
-			// to tile
-			let tile = self.board[x2, y2]
-			UIView.animate(withDuration: 2, animations: {
-				tile?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-			}, completion: { finished in
-				tile?.transform = CGAffineTransform.identity
-			})
-		})
-	}
-	
-	func userDidWon() {
-		//print("win")
-	}
 
+extension ViewController: GameLogicManagerDelegate {
 	func userDidLost() {
-
+		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
+			self.renderer.reset()
+			self.manager.start()
+		}))
+		self.present(alert, animated: true, completion: nil)
 	}
-	
+
 	func scoreDidChanged(to score: Int) {
 		self.score.value = score
+		if highScore.value < score {
+			self.highScore.value = score
+		}
+	}
+
+	func userDidWon() {
+		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+		self.present(alert, animated: true, completion: nil)
+	}
+
+	func didCreatedTile(_ tile: Tile?) {
+		guard let tile = tile else {
+			return
+		}
+		renderer.add(tile: tile)
+	}
+
+	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping () -> Void) {
+		renderer.move(from: source, to: destination, completion: completion)
+	}
+
+	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping () -> Void) {
+		renderer.move(from: source, to: destination, completion: completion)
 	}
 }
 
@@ -102,24 +100,21 @@ extension ViewController {
 	}
 	// MARK: left
 	@objc func swipedLeft() {
-		controller.move(to: .left)
+		manager.shift(to: .left)
 	}
 	// MARK: right
 	@objc func swipedRight() {
-		controller.move(to: .right)
-//		self.moveTwoTiles(from: ((0, 0), (0, 1)), to: (0, 3), value: 4)
-//		self.moveOneTile(from: (0, 0), to: (0, 3), value: 2)
-//		self.moveOneTile(from: (1, 0), to: (1, 3), value: 2)
+		manager.shift(to: .right)
 	}
 	// MARK: up
 	@objc func swipedUp() {
-		controller.move(to: .up)
+		manager.shift(to: .up)
 	}
 	// MARK: down
 	@objc func swipedDown() {
-//		controller.restart()
-		controller.move(to: .down)
+		manager.shift(to: .down)
 	}
+
 }
 
 
