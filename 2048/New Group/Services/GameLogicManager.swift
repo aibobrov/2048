@@ -71,13 +71,9 @@ class GameLogicManager {
 
 	func start() {
 		reset()
-//		delegate?.didCreatedTile(randomTile)
-//		delegate?.didCreatedTile(randomTile)
-		for row in 0..<dimension {
-			for column in 0..<dimension {
-				delegate?.didCreatedTile(randomTile)
-			}
-		}
+
+		delegate?.didCreatedTile(randomTile)
+		delegate?.didCreatedTile(randomTile)
 	}
 
 	private var randomTile: Tile? {
@@ -123,7 +119,6 @@ class GameLogicManager {
 		}
 
 	}
-
 
 
 	func shift(to direction: MoveDirection) {
@@ -181,6 +176,8 @@ class GameLogicManager {
 
 		if performedShift {
 			delegate?.didCreatedTile(randomTile)
+		} else {
+			delegate?.nothingChangedShift(to: direction)
 		}
 		isUserLost = isGameOver()
 
@@ -206,3 +203,4 @@ class GameLogicManager {
 	}
 
 }
+

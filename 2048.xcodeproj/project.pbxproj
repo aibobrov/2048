@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1037FCE1F7707870029C0C6 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */; };
 		A19470731F5B586600D13CA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19470721F5B586600D13CA2 /* AppDelegate.swift */; };
 		A19470751F5B586600D13CA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19470741F5B586600D13CA2 /* ViewController.swift */; };
 		A19470781F5B586600D13CA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19470761F5B586600D13CA2 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
 		A194706F1F5B586600D13CA2 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19470721F5B586600D13CA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A19470741F5B586600D13CA2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				A1F789171F74610C00A60F2D /* TileView.swift */,
 				A1DE7F761F5DEFF8002DF9B2 /* Score.swift */,
 				A1F789241F75B59B00A60F2D /* HighScore.swift */,
+				A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			files = (
 				A19470751F5B586600D13CA2 /* ViewController.swift in Sources */,
 				A19470951F5D8EF300D13CA2 /* GameLogicManager.swift in Sources */,
+				A1037FCE1F7707870029C0C6 /* CGPointExtension.swift in Sources */,
 				A1F7891E1F74610C00A60F2D /* Board.swift in Sources */,
 				A1F789201F74610C00A60F2D /* GameBoardRenderer.swift in Sources */,
 				A1F7891C1F74610C00A60F2D /* TileView.swift in Sources */,

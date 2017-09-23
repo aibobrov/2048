@@ -10,7 +10,7 @@ import UIKit
 
 class Board: UIView {
 	static let boardColor = UIColor(red:0.74, green:0.68, blue:0.62, alpha:1.00)
-	static let radius: CGFloat = 7.0
+	static let radius: CGFloat = 4.0
 	
 	let dimension: Int
 	let tileSize: CGSize
@@ -31,7 +31,6 @@ class Board: UIView {
 		setupBackGround()
 		setupEmptyTiles()
 	}
-
 
 	private func setupBackGround() {
 		self.layer.cornerRadius = Board.radius

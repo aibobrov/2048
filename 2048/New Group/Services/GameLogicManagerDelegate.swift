@@ -12,6 +12,7 @@ protocol GameLogicManagerDelegate {
 	func userDidLost()
 	func scoreDidChanged(to score: Int)
 	func userDidWon()
+	func nothingChangedShift(to direction: MoveDirection)
 	func didCreatedTile(_ tile: Tile?)
 	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping ()->Void)
 	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping ()->Void)

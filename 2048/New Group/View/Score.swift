@@ -34,7 +34,7 @@ class Score: UIView {
 	}
 
 	override init(frame: CGRect) {
-		label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 3))
+		label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 2 ))
 		score = UILabel(frame: CGRect(x: 0, y: label.frame.height, width: frame.width, height: frame.height - label.frame.height))
 		let delta = 10
 		let plusScoreViewSize = CGSize(width: score.frame.width - CGFloat(delta), height: score.frame.height / 3)
@@ -45,8 +45,9 @@ class Score: UIView {
 		setupScore()
 		setupPlusScore()
 
-		addSubview(label)
+
 		addSubview(score)
+		addSubview(label)
 		addSubview(plusScoreView)
 		bringSubview(toFront: plusScoreView)
 

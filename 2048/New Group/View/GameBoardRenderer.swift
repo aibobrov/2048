@@ -23,6 +23,33 @@ class GameBoardRenderer {
 		tileViews.removeAll(keepingCapacity: false)
 	}
 
+
+	func failedShifting(to direction: MoveDirection) {
+		print("failedShifting to \(direction)")
+		let delta: CGFloat = 30
+		var deltaPoint: CGPoint {
+			switch direction {
+			case .up:
+				return CGPoint(x: 0, y: -delta)
+			case .down:
+				return CGPoint(x: 0, y: delta)
+			case .left:
+				return CGPoint(x: -delta, y: 0)
+			case .right:
+				return CGPoint(x: delta, y: 0)
+			}
+		}
+		for tile in tileViews {
+			UIView.animate(withDuration: 0.1, animations: {
+				tile.frame.origin = tile.frame.origin + deltaPoint
+			}, completion: { _ in
+				UIView.animate(withDuration: 0.1, animations: {
+					tile.frame.origin = tile.frame.origin - deltaPoint
+				})
+			})
+		}
+	}
+
 	func move(from sourceTile: Tile, to destinationTile: Tile, completion: @escaping () -> Void) {
 		let sourceTileView = tileViews.filter({$0.position == sourceTile.position}).first!
 		let destinationTileView = tileViews.filter({$0.position == destinationTile.position}).first!

@@ -18,20 +18,19 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 
 		let dimension = 4
-//		let spaceBtwTiles: CGFloat = CGFloat(min(2, 20 - dimension))
-		let spaceBtwTiles: CGFloat = CGFloat(max(5, (20 - dimension) / 2) )
+		let spaceBtwTiles: CGFloat = 13
 		let board = Board(dimension: dimension, offsetBtwTiles: spaceBtwTiles, boardSize: CGSize(width: self.view.frame.width - (spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
-		
+
 		manager = GameLogicManager(dimension: dimension, winValue: 2048)
 		manager.delegate = self
 
 		renderer = GameBoardRenderer(board: board)
 
-		let offset: CGFloat = 15
-		let scoreSize = CGSize(width: 100, height: 70)
-		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 50)
+		let offset: CGFloat = board.frame.minX
+		let scoreSize = CGSize(width: 100, height: 50)
+		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 20)
 		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
 		self.view.addSubview(score)
 
@@ -41,12 +40,17 @@ class ViewController: UIViewController {
 		self.view.addSubview(highScore!)
 
 		setupGestures()
+
 		manager.start()
 
 	}
 }
 
 extension ViewController: GameLogicManagerDelegate {
+	func nothingChangedShift(to direction: MoveDirection) {
+		renderer.failedShifting(to: direction)
+	}
+
 	func userDidLost() {
 		let alert = UIAlertController(title: "You Lost", message: "Try next time!", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in

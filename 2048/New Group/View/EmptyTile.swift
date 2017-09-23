@@ -15,7 +15,7 @@ class EmptyTile: UIView {
 		self.position = position
 		super.init(frame: frame)
 		self.backgroundColor = App.tile(value: nil).color
-		self.layer.cornerRadius = 7.0
+		self.layer.cornerRadius = Board.radius
 	}
 
 
