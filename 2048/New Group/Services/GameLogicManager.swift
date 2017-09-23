@@ -54,7 +54,6 @@ class GameLogicManager {
 	init(dimension: Int, winValue: Int) {
 		self.dimension = dimension
 		self.winTileValue = winValue
-		start()
 	}
 
 	private func reset() {
@@ -72,8 +71,13 @@ class GameLogicManager {
 
 	func start() {
 		reset()
-		delegate?.didCreatedTile(randomTile)
-		delegate?.didCreatedTile(randomTile)
+//		delegate?.didCreatedTile(randomTile)
+//		delegate?.didCreatedTile(randomTile)
+		for row in 0..<dimension {
+			for column in 0..<dimension {
+				delegate?.didCreatedTile(randomTile)
+			}
+		}
 	}
 
 	private var randomTile: Tile? {

@@ -18,7 +18,9 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 
 		let dimension = 4
-		let board = Board(dimension: dimension, boardSize: CGSize(width: self.view.frame.width - (Board.spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (Board.spaceBtwTiles + 1) * 2))
+//		let spaceBtwTiles: CGFloat = CGFloat(min(2, 20 - dimension))
+		let spaceBtwTiles: CGFloat = CGFloat(max(5, (20 - dimension) / 2) )
+		let board = Board(dimension: dimension, offsetBtwTiles: spaceBtwTiles, boardSize: CGSize(width: self.view.frame.width - (spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
 		self.view.addSubview(board)
 		
@@ -46,7 +48,7 @@ class ViewController: UIViewController {
 
 extension ViewController: GameLogicManagerDelegate {
 	func userDidLost() {
-		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+		let alert = UIAlertController(title: "You Lost", message: "Try next time!", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
 			self.renderer.reset()
 			self.manager.start()
@@ -63,9 +65,9 @@ extension ViewController: GameLogicManagerDelegate {
 	}
 
 	func userDidWon() {
-		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
-		self.present(alert, animated: true, completion: nil)
+//		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
+//		alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
+//		self.present(alert, animated: true, completion: nil)
 	}
 
 	func didCreatedTile(_ tile: Tile?) {

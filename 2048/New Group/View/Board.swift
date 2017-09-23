@@ -14,16 +14,17 @@ class Board: UIView {
 	
 	let dimension: Int
 	let tileSize: CGSize
-	static let spaceBtwTiles: CGFloat = 15
+	var spaceBtwTiles: CGFloat = 8
 	var tileRects = [CGRect]()
 
-	init(dimension: Int, boardSize: CGSize) {
+	init(dimension: Int, offsetBtwTiles: CGFloat, boardSize: CGSize) {
 		guard boardSize.height == boardSize.width else {
 			fatalError("Square board!")
 		}
 		self.dimension = dimension
+		self.spaceBtwTiles = offsetBtwTiles
 
-		let sizeLength = (Double(boardSize.height) - Double(Board.spaceBtwTiles) * Double(self.dimension + 1)) / Double(self.dimension)
+		let sizeLength = (Double(boardSize.height) - Double(spaceBtwTiles) * Double(self.dimension + 1)) / Double(self.dimension)
 		tileSize = CGSize(width: sizeLength, height: sizeLength)
 		super.init(frame: CGRect(origin: CGPoint.zero, size: boardSize))
 
@@ -38,17 +39,17 @@ class Board: UIView {
 	}
 
 	private func setupEmptyTiles() {
-		var point = CGPoint(x: Board.spaceBtwTiles, y: Board.spaceBtwTiles)
+		var point = CGPoint(x: spaceBtwTiles, y: spaceBtwTiles)
 		for x in 0..<dimension  {
-			point.x = Board.spaceBtwTiles
+			point.x = spaceBtwTiles
 			for y in 0..<dimension {
 				let backgroundTile = EmptyTile(position: Position(x, y), frame: CGRect(origin: point, size: tileSize))
 				self.addSubview(backgroundTile)
 				tileRects.append(backgroundTile.frame)
 				
-				point.x += Board.spaceBtwTiles + tileSize.height
+				point.x += spaceBtwTiles + tileSize.height
 			}
-			point.y += Board.spaceBtwTiles + tileSize.height
+			point.y += spaceBtwTiles + tileSize.height
 		}
 	}
 
