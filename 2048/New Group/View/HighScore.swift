@@ -10,23 +10,9 @@ import Foundation
 import UIKit
 
 class HighScore: Score {
-	enum Key: String {
-		case highScore = "HighScore"
-	}
-	override var value: Int {
-		willSet {
-			if newValue > value {
-				UserDefaults.standard.set(newValue, forKey: Key.highScore.rawValue)
-			}
-		}
-		didSet {
-			super.value = value
-		}
-	}
-
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		value = UserDefaults.standard.integer(forKey: Key.highScore.rawValue)
 		self.label.text = "High Score"
 	}
 

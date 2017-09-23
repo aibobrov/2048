@@ -143,14 +143,14 @@ class GameLogicManager {
 			while tileIndex < tilesToCheck.count {
 				let currentTile = tilesToCheck[tileIndex]
 				let filter: ((_ tile: Tile) -> Bool) = { tile in
-					let position: Bool = {
+					var position: Bool {
 						switch direction {
-						case .up: return tile.position.x > currentTile.position.y
+						case .up: return tile.position.x > currentTile.position.x
 						case .right: return tile.position.y < currentTile.position.y
 						case .down: return tile.position.x < currentTile.position.x
 						case .left: return tile.position.y > currentTile.position.y
 						}
-					}()
+					}
 					return position && tile.value != nil
 				}
 
@@ -174,6 +174,7 @@ class GameLogicManager {
 				tileIndex += 1
 			}
 		}
+
 		if performedShift {
 			delegate?.didCreatedTile(randomTile)
 		}

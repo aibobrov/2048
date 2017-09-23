@@ -40,7 +40,7 @@ class GameBoardRenderer {
 			}
 
 			UIView.animate(withDuration: 0.05, animations: {
-				sourceTileView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+				sourceTileView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
 			}, completion: { finished in
 				sourceTileView.transform = CGAffineTransform.identity
 			})

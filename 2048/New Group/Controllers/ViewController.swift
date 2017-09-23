@@ -35,10 +35,12 @@ class ViewController: UIViewController {
 
 		let highScorePoint = CGPoint(x: scorePoint.x - scoreSize.width - offset, y: scorePoint.y)
 		highScore = HighScore(frame: CGRect(origin: highScorePoint, size: scoreSize))
+		highScore.value = ModelController.shared.loadHighScore()
 		self.view.addSubview(highScore!)
 
 		setupGestures()
 		manager.start()
+
 	}
 }
 
@@ -56,6 +58,7 @@ extension ViewController: GameLogicManagerDelegate {
 		self.score.value = score
 		if highScore.value < score {
 			self.highScore.value = score
+			ModelController.shared.save(highScore: score)
 		}
 	}
 
