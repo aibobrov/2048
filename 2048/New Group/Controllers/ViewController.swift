@@ -13,11 +13,30 @@ class ViewController: UIViewController {
 	var score: Score!
 	var highScore: HighScore!
 	var renderer: GameBoardRenderer!
-
+	var restartButton: RestartButton!
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		let dimension = 4
+		setDimention(to: dimension)
+		setupGestures()
+
+		manager.start()
+//		self.clearSubviews()
+//		self.setDimention(to: self.manager.dimension + 1)
+	}
+
+	@objc private func restartGame() {
+		let alert = UIAlertController(title: "Are sure to start new game?", message: "Current results will be lost", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+			self.renderer.reset()
+			self.manager.start()
+		}))
+		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+		self.present(alert, animated: true, completion: nil)
+	}
+
+	private func setDimention(to dimension: Int) {
 		let spaceBtwTiles: CGFloat = 13
 		let board = Board(dimension: dimension, offsetBtwTiles: spaceBtwTiles, boardSize: CGSize(width: self.view.frame.width - (spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
@@ -36,13 +55,17 @@ class ViewController: UIViewController {
 
 		let highScorePoint = CGPoint(x: scorePoint.x - scoreSize.width - offset, y: scorePoint.y)
 		highScore = HighScore(frame: CGRect(origin: highScorePoint, size: scoreSize))
-		highScore.value = ModelController.shared.loadHighScore()
+		highScore.value = ModelController.shared.loadHighScore(for: dimension)
 		self.view.addSubview(highScore!)
 
-		setupGestures()
+		restartButton = RestartButton(frame: CGRect(origin: CGPoint(x: scorePoint.x, y: score.frame.maxY + offset / 2), size: CGSize(width: scoreSize.width, height: scoreSize.height / 2)))
 
-		manager.start()
+		restartButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+		self.view.addSubview(restartButton)
+	}
 
+	private func clearSubviews() {
+		self.view.subviews.forEach({$0.removeFromSuperview()})
 	}
 }
 
@@ -64,7 +87,7 @@ extension ViewController: GameLogicManagerDelegate {
 		self.score.value = score
 		if highScore.value < score {
 			self.highScore.value = score
-			ModelController.shared.save(highScore: score)
+			ModelController.shared.save(highScore: score, for: manager.dimension)
 		}
 	}
 
@@ -111,19 +134,21 @@ extension ViewController {
 	@objc func swipedLeft() {
 		manager.shift(to: .left)
 	}
+
 	// MARK: right
 	@objc func swipedRight() {
 		manager.shift(to: .right)
 	}
+
 	// MARK: up
 	@objc func swipedUp() {
 		manager.shift(to: .up)
 	}
+
 	// MARK: down
 	@objc func swipedDown() {
 		manager.shift(to: .down)
 	}
-
 }
 
 

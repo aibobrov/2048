@@ -51,7 +51,7 @@ class Score: UIView {
 		addSubview(plusScoreView)
 		bringSubview(toFront: plusScoreView)
 
-		self.backgroundColor = Board.boardColor
+		self.backgroundColor = App.board.color
 		self.layer.cornerRadius = Board.radius
 	}
 
@@ -59,14 +59,14 @@ class Score: UIView {
 		plusScoreView.text = ""
 		plusScoreView.textAlignment = .right
 		plusScoreView.backgroundColor = UIColor.clear
-		plusScoreView.textColor = UIColor(red:0.91, green:0.87, blue:0.82, alpha: 0.5)
+		plusScoreView.textColor = App.plusText.color
 		plusScoreView.font = UIFont(name: "Helvetica-Bold", size: 15)
 	}
 
 	private func setupLabel() {
 		label.text = "Score"
 		label.textAlignment = .center
-		label.textColor = UIColor(red:0.91, green:0.87, blue:0.82, alpha:1.00)
+		label.textColor = App.text.color
 		label.font = UIFont(name: "Helvetica-Bold", size: 20)
 		label.numberOfLines = 1
 		label.minimumScaleFactor = 10 / self.label.font.pointSize

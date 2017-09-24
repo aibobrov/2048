@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1037FCE1F7707870029C0C6 /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */; };
+		A1037FD01F785ECE0029C0C6 /* RestartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1037FCF1F785ECE0029C0C6 /* RestartButton.swift */; };
 		A19470731F5B586600D13CA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19470721F5B586600D13CA2 /* AppDelegate.swift */; };
 		A19470751F5B586600D13CA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19470741F5B586600D13CA2 /* ViewController.swift */; };
 		A19470781F5B586600D13CA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19470761F5B586600D13CA2 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
+		A1037FCF1F785ECE0029C0C6 /* RestartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestartButton.swift; sourceTree = "<group>"; };
 		A194706F1F5B586600D13CA2 /* 2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19470721F5B586600D13CA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A19470741F5B586600D13CA2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				A1DE7F761F5DEFF8002DF9B2 /* Score.swift */,
 				A1F789241F75B59B00A60F2D /* HighScore.swift */,
 				A1037FCD1F7707870029C0C6 /* CGPointExtension.swift */,
+				A1037FCF1F785ECE0029C0C6 /* RestartButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				A1F789231F74621E00A60F2D /* Tile.swift in Sources */,
 				A1F570351F76EDFD00F548E3 /* ModelController.swift in Sources */,
 				A1DE7F771F5DEFF8002DF9B2 /* Score.swift in Sources */,
+				A1037FD01F785ECE0029C0C6 /* RestartButton.swift in Sources */,
 				A19470971F5DCB7C00D13CA2 /* GameLogicManagerDelegate.swift in Sources */,
 				A1F789251F75B59B00A60F2D /* HighScore.swift in Sources */,
 				A194707B1F5B586600D13CA2 /* _048.xcdatamodeld in Sources */,

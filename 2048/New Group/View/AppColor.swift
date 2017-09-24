@@ -10,9 +10,12 @@ import Foundation
 import UIKit
 
 enum App {
+
 	case board
 	case tile(value: Int?)
 	case tileText(value: Int?)
+	case text
+	case plusText
 	static let emptyColor = UIColor(white: 1.0, alpha: 0.4)
 	var color: UIColor {
 
@@ -81,7 +84,11 @@ enum App {
 			default:
 				return white
 			}
+		case .text:
+			return UIColor(white: 1, alpha: 0.7)
+//			return UIColor(red:0.91, green:0.87, blue:0.82, alpha: 1)
+		case .plusText:
+			return UIColor(red:0.91, green:0.87, blue:0.82, alpha: 0.5)
 		}
 	}
 }
-

@@ -25,7 +25,6 @@ class GameBoardRenderer {
 
 
 	func failedShifting(to direction: MoveDirection) {
-		print("failedShifting to \(direction)")
 		let delta: CGFloat = 30
 		var deltaPoint: CGPoint {
 			switch direction {
@@ -95,6 +94,7 @@ class GameBoardRenderer {
 		let tileView = TileView(value: tile.value!, position: tile.position, frame: board.positionRect(position: tile.position))
 		board.addSubview(tileView)
 		board.bringSubview(toFront: tileView)
+		
 		// appearance animation
 		let scale: CGFloat = 0.25
 		tileView.transform = CGAffineTransform(scaleX: scale, y: scale)

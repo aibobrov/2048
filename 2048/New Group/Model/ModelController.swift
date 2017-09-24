@@ -12,17 +12,25 @@ import Foundation
 
 class ModelController {
 
-	enum Key: String {
-		case highScore = "HighScore"
+	enum Key {
+
+		case highScore(for: Int)
+
+		var key: String {
+			switch self {
+			case .highScore(let dimention):
+				return "HighScore \(dimention)"
+			}
+		}
 	}
 
 	static let shared = ModelController()
 	
-	func save(highScore: Int) {
-		UserDefaults.standard.set(highScore, forKey: Key.highScore.rawValue)
+	func save(highScore: Int, for dimention: Int) {
+		UserDefaults.standard.set(highScore, forKey: Key.highScore(for: dimention).key)
 	}
 
-	func loadHighScore() -> Int {
-		return UserDefaults.standard.integer(forKey: Key.highScore.rawValue)
+	func loadHighScore(for dimention: Int) -> Int {
+		return UserDefaults.standard.integer(forKey: Key.highScore(for: dimention).key)
 	}
 }
