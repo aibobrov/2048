@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 	var highScore: HighScore!
 	var renderer: GameBoardRenderer!
 	var restartButton: RestartButton!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -65,7 +66,7 @@ class ViewController: UIViewController {
 	}
 
 	private func clearSubviews() {
-		self.view.subviews.forEach({$0.removeFromSuperview()})
+		self.view.subviews.forEach({ $0.removeFromSuperview() })
 	}
 }
 

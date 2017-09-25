@@ -33,4 +33,5 @@ class ModelController {
 	func loadHighScore(for dimention: Int) -> Int {
 		return UserDefaults.standard.integer(forKey: Key.highScore(for: dimention).key)
 	}
+	
 }
