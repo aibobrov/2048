@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class GameLogicManager {
-	private var tiles = [Tile]() {
+	var tiles = [Tile]() {
 		didSet {
 			refreshNeighborTiles()
 		}
@@ -24,6 +24,7 @@ class GameLogicManager {
 		}
 	}
 	var delegate: GameLogicManagerDelegate?
+	var sourceDelegate: GameSourceDelegate?
 
 	private var updating = false
 
@@ -69,11 +70,24 @@ class GameLogicManager {
 		refreshNeighborTiles()
 	}
 
+	func start(with tiles: [Tile]) {
+		guard tiles.filter({$0.value != nil}).count != 0 else {
+			start()
+			return
+		}
+		reset()
+		self.tiles = tiles
+		for tile in  tiles.filter({$0.value != nil}) {
+			delegate?.didCreatedTile(tile)
+		}
+		sourceDelegate?.boardValuesChanged(to: self.tiles)
+	}
+
 	func start() {
 		reset()
-
 		delegate?.didCreatedTile(randomTile)
 		delegate?.didCreatedTile(randomTile)
+		sourceDelegate?.boardValuesChanged(to: self.tiles)
 	}
 
 	private var randomTile: Tile? {
@@ -176,6 +190,7 @@ class GameLogicManager {
 
 		if performedShift {
 			delegate?.didCreatedTile(randomTile)
+			sourceDelegate?.boardValuesChanged(to: self.tiles)
 		} else {
 			delegate?.nothingChangedShift(to: direction)
 		}

@@ -17,14 +17,10 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		let dimension = 4
 		setDimention(to: dimension)
 		setupGestures()
-
-		manager.start()
-//		self.clearSubviews()
-//		self.setDimention(to: self.manager.dimension + 1)
+		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension))
 	}
 
 	@objc private func restartGame() {
@@ -38,6 +34,7 @@ class ViewController: UIViewController {
 	}
 
 	private func setDimention(to dimension: Int) {
+		self.clearSubviews()
 		let spaceBtwTiles: CGFloat = 13
 		let board = Board(dimension: dimension, offsetBtwTiles: spaceBtwTiles, boardSize: CGSize(width: self.view.frame.width - (spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (spaceBtwTiles + 1) * 2))
 		board.center = self.view.center
@@ -45,6 +42,7 @@ class ViewController: UIViewController {
 
 		manager = GameLogicManager(dimension: dimension, winValue: 2048)
 		manager.delegate = self
+		manager.sourceDelegate = self
 
 		renderer = GameBoardRenderer(board: board)
 
@@ -67,6 +65,14 @@ class ViewController: UIViewController {
 
 	private func clearSubviews() {
 		self.view.subviews.forEach({ $0.removeFromSuperview() })
+	}
+}
+
+// MARK: Source
+
+extension ViewController: GameSourceDelegate {
+	func boardValuesChanged(to tiles: [Tile]) {
+		ModelController.shared.save(dimension: manager.dimension, tiles: tiles)
 	}
 }
 
@@ -134,6 +140,7 @@ extension ViewController {
 	// MARK: left
 	@objc func swipedLeft() {
 		manager.shift(to: .left)
+
 	}
 
 	// MARK: right
