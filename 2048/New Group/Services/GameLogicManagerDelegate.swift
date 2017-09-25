@@ -18,6 +18,10 @@ protocol GameLogicManagerDelegate {
 	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping ()->Void)
 }
 
+protocol GameSourceDelegate {
+	func boardValuesChanged(to tiles: [Tile])
+}
+
 enum MoveDirection {
 	case up
 	case down
