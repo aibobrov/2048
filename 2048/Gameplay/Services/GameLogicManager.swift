@@ -23,6 +23,7 @@ class GameLogicManager {
 			delegate?.scoreDidChanged(to: score)
 		}
 	}
+	
 	var delegate: GameLogicManagerDelegate?
 	var sourceDelegate: GameSourceDelegate?
 
