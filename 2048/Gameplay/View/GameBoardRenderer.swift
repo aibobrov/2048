@@ -12,6 +12,7 @@ import UIKit
 class GameBoardRenderer {
 	var board: Board
 	private var tileViews = [TileView]()
+	let moveSpeed = 0.1
 	init(board: Board) {
 		self.board = board
 	}
@@ -39,7 +40,7 @@ class GameBoardRenderer {
 			}
 		}
 		for tile in tileViews {
-			UIView.animate(withDuration: 0.1, animations: {
+			UIView.animate(withDuration: moveSpeed, animations: {
 				tile.frame.origin = tile.frame.origin + deltaPoint
 			}, completion: { _ in
 				UIView.animate(withDuration: 0.1, animations: {
@@ -54,7 +55,7 @@ class GameBoardRenderer {
 		let destinationTileView = tileViews.filter({$0.position == destinationTile.position}).first!
 		board.bringSubview(toFront: sourceTileView)
 
-		UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+		UIView.animate(withDuration: moveSpeed, delay: 0, options: .curveEaseInOut, animations: {
 			sourceTileView.center = destinationTileView.center
 			sourceTileView.position = destinationTile.position
 			destinationTileView.alpha = 0
