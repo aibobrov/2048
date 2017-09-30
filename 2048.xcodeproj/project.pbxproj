@@ -108,8 +108,8 @@
 		A19470891F5B58A400D13CA2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A1FE32511F79BCBC005833B8 /* _048.xcdatamodeld */,
 				A1FE32551F79BCBC005833B8 /* ModelController.swift */,
+				A1FE32511F79BCBC005833B8 /* _048.xcdatamodeld */,
 				A1FE32531F79BCBC005833B8 /* Position.swift */,
 				A1FE32541F79BCBC005833B8 /* Tile.swift */,
 				A1FE32561F79BCBC005833B8 /* TileModel+CoreDataClass.swift */,
@@ -121,12 +121,12 @@
 		A194708A1F5B58B400D13CA2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A1FE323A1F79BBE6005833B8 /* GameBoardRenderer.swift */,
 				A1FE324D1F79BC78005833B8 /* Main.storyboard */,
 				A1FE32361F79BBE6005833B8 /* AppColor.swift */,
 				A1FE32341F79BBE6005833B8 /* Board.swift */,
 				A1FE32381F79BBE6005833B8 /* CGPointExtension.swift */,
 				A1FE323B1F79BBE6005833B8 /* EmptyTile.swift */,
-				A1FE323A1F79BBE6005833B8 /* GameBoardRenderer.swift */,
 				A1FE32331F79BBE6005833B8 /* HighScore.swift */,
 				A1FE32321F79BBE6005833B8 /* RestartButton.swift */,
 				A1FE32351F79BBE6005833B8 /* Score.swift */,
