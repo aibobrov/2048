@@ -17,6 +17,7 @@ class GameLogicManager {
 	}
 	var dimension: Int
 	private var winTileValue: Int
+	private var operationQueue = [MoveDirection]()
 
 	var score: Int = 0 {
 		didSet {
@@ -138,6 +139,7 @@ class GameLogicManager {
 
 	func shift(to direction: MoveDirection) {
 		if updating {
+			operationQueue.append(direction)
 			return
 		}
 		updating = true
@@ -199,8 +201,15 @@ class GameLogicManager {
 
 		if !waitForSignalToContinue {
 			updating = false
+			guard let direction = operationQueue.first else {
+				return
+			}
+			self.shift(to: direction)
+			operationQueue = Array(operationQueue.dropFirst())
 		}
 	}
+
+
 
 	private func moveOnSameTile(from sourceTile: Tile, to destinationTile: Tile) {
 		destinationTile.value! *= 2
