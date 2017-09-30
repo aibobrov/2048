@@ -43,9 +43,9 @@ class GameBoardRenderer {
 			UIView.animate(withDuration: moveSpeed, animations: {
 				tile.frame.origin = tile.frame.origin + deltaPoint
 			}, completion: { _ in
-				UIView.animate(withDuration: 0.1, animations: {
+				UIView.animate(withDuration: self.moveSpeed * 2, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 7, options: .curveEaseOut, animations: {
 					tile.frame.origin = tile.frame.origin - deltaPoint
-				})
+				}, completion: nil)
 			})
 		}
 	}
@@ -66,12 +66,11 @@ class GameBoardRenderer {
 				return
 			}
 
-			UIView.animate(withDuration: 0.05, animations: {
+			UIView.animate(withDuration: self.moveSpeed, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: .curveEaseOut, animations: {
 				sourceTileView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-			}, completion: { finished in
-				sourceTileView.transform = CGAffineTransform.identity
+			}, completion: { _ in
+				sourceTileView.transform = .identity
 			})
-
 			destinationTileView.alpha = 0
 			destinationTileView.removeFromSuperview()
 			if let index = self.tileViews.index(of: destinationTileView) {
@@ -97,15 +96,14 @@ class GameBoardRenderer {
 		board.bringSubview(toFront: tileView)
 		
 		// appearance animation
-		let scale: CGFloat = 0.25
+		let scale: CGFloat = 0.2
 		tileView.transform = CGAffineTransform(scaleX: scale, y: scale)
 		tileView.alpha = 0
-		UIView.animate(withDuration: 0.2, animations: {
+		UIView.animate(withDuration: self.moveSpeed * 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: .curveEaseOut, animations: {
 			tileView.transform = CGAffineTransform(scaleX: 1, y: 1)
 			tileView.alpha = 1.0
-		})
-		
-		tileViews.append(tileView)
+		}, completion: nil)
+		self.tileViews.append(tileView)
 	}
 
 }
