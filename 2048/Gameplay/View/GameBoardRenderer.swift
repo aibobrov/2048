@@ -62,6 +62,7 @@ class GameBoardRenderer {
 
 			sourceTileView.value = destinationTile.value!
 		}) { (finished) -> Void in
+			
 			guard finished else {
 				return
 			}
