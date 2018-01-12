@@ -31,7 +31,7 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		setDimention(to: dimensions)
 		setupGestures()
-		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension))
+		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension), score: score.value)
 	}
 
 	@objc private func restartGame() {
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
 		highScore.heightAnchor.constraint(equalToConstant: highScore.frame.height).isActive = true
 
 		restartButton = RestartButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: scoreSize.width, height:
-		scoreSize.height / 2)))
+		scoreSize.height * 0.6)))
 		restartButton.translatesAutoresizingMaskIntoConstraints = false
 		restartButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
 		self.view.addSubview(restartButton)
