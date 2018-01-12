@@ -14,10 +14,19 @@ class ViewController: UIViewController {
 	var highScore: HighScore!
 	var renderer: GameBoardRenderer!
 	var restartButton: RestartButton!
-	
+
+	var dimension = 4
+
+	var extraSpace: CGFloat { // constant
+		return 13
+	}
+
+	var winValue: Int { // constant
+		return 2048
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let dimension = 4
 		setDimention(to: dimension)
 		setupGestures()
 		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension))
@@ -35,128 +44,52 @@ class ViewController: UIViewController {
 
 	private func setDimention(to dimension: Int) {
 		self.clearSubviews()
-		let spaceBtwTiles: CGFloat = 13
-		let board = Board(dimension: dimension, offsetBtwTiles: spaceBtwTiles, boardSize: CGSize(width: self.view.frame.width - (spaceBtwTiles + 1)  * 2, height:  self.view.frame.width - (spaceBtwTiles + 1) * 2))
-		board.center = self.view.center
-		self.view.addSubview(board)
 
-		manager = GameLogicManager(dimension: dimension, winValue: 2048)
+		let board = Board(dimension: dimension, offsetBtwTiles: extraSpace, boardSize: CGSize(width: self.view.frame.width - (extraSpace + 1) * 2, height: self.view.frame.width - (extraSpace + 1) * 2))
+		board.translatesAutoresizingMaskIntoConstraints = false
+		self.view.addSubview(board)
+		board.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+		board.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+		board.widthAnchor.constraint(equalToConstant: board.frame.width).isActive = true
+		board.heightAnchor.constraint(equalToConstant: board.frame.height).isActive = true
+
+		manager = GameLogicManager(dimension: dimension, winValue: winValue)
 		manager.delegate = self
 		manager.sourceDelegate = self
 
 		renderer = GameBoardRenderer(board: board)
 
-		let offset: CGFloat = board.frame.minX
 		let scoreSize = CGSize(width: 100, height: 50)
-		let scorePoint = CGPoint(x: (view.frame.width + board.frame.width) / 2 - scoreSize.width, y: 20)
-		score = Score(frame: CGRect(origin: scorePoint, size: scoreSize))
+		score = Score(frame: CGRect(origin: CGPoint.zero, size: scoreSize))
+		score.translatesAutoresizingMaskIntoConstraints = false
 		self.view.addSubview(score)
+		score.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+		score.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -extraSpace).isActive = true
+		score.widthAnchor.constraint(equalToConstant: score.frame.width).isActive = true
+		score.heightAnchor.constraint(equalToConstant: score.frame.height).isActive = true
 
-		let highScorePoint = CGPoint(x: scorePoint.x - scoreSize.width - offset, y: scorePoint.y)
-		highScore = HighScore(frame: CGRect(origin: highScorePoint, size: scoreSize))
+		highScore = HighScore(frame: CGRect(origin: CGPoint.zero, size: scoreSize))
 		highScore.value = ModelController.shared.loadHighScore(for: dimension)
-		self.view.addSubview(highScore!)
+		highScore.translatesAutoresizingMaskIntoConstraints = false
+		self.view.addSubview(highScore)
+		highScore.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+		highScore.trailingAnchor.constraint(equalTo: score.leadingAnchor, constant: -extraSpace).isActive = true
+		highScore.widthAnchor.constraint(equalToConstant: highScore.frame.width).isActive = true
+		highScore.heightAnchor.constraint(equalToConstant: highScore.frame.height).isActive = true
 
-		restartButton = RestartButton(frame: CGRect(origin: CGPoint(x: scorePoint.x, y: score.frame.maxY + offset / 2), size: CGSize(width: scoreSize.width, height: scoreSize.height / 2)))
-
+		restartButton = RestartButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: scoreSize.width, height:
+		scoreSize.height / 2)))
+		restartButton.translatesAutoresizingMaskIntoConstraints = false
 		restartButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
 		self.view.addSubview(restartButton)
+		restartButton.topAnchor.constraint(equalTo: score.bottomAnchor, constant: extraSpace).isActive = true
+		restartButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -extraSpace).isActive = true
+		restartButton.widthAnchor.constraint(equalToConstant: restartButton.frame.width).isActive = true
+		restartButton.heightAnchor.constraint(equalToConstant: restartButton.frame.height).isActive = true
 	}
 
 	private func clearSubviews() {
 		self.view.subviews.forEach({ $0.removeFromSuperview() })
 	}
 }
-
-// MARK: Source
-
-extension ViewController: GameSourceDelegate {
-	func boardValuesChanged(to tiles: [Tile]) {
-		ModelController.shared.save(dimension: manager.dimension, tiles: tiles)
-	}
-}
-
-extension ViewController: GameLogicManagerDelegate {
-	func nothingChangedShift(to direction: MoveDirection) {
-		renderer.failedShifting(to: direction)
-	}
-
-	func userDidLost() {
-		let alert = UIAlertController(title: "You Lost", message: "Try next time!", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
-			self.renderer.reset()
-			self.manager.start()
-		}))
-		self.present(alert, animated: true, completion: nil)
-	}
-
-	func scoreDidChanged(to score: Int) {
-		self.score.value = score
-		if highScore.value < score {
-			self.highScore.value = score
-			ModelController.shared.save(highScore: score, for: manager.dimension)
-		}
-	}
-
-	func userDidWon() {
-//		let alert = UIAlertController(title: "You win", message: "I've reached 2048!", preferredStyle: .alert)
-//		alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: nil))
-//		self.present(alert, animated: true, completion: nil)
-	}
-
-	func didCreatedTile(_ tile: Tile?) {
-		guard let tile = tile else {
-			return
-		}
-		renderer.add(tile: tile)
-	}
-
-	func didMoveTile(from source: Tile, to destination: Tile, completion: @escaping () -> Void) {
-		renderer.move(from: source, to: destination, completion: completion)
-	}
-
-	func didMoveTile(from source: Tile, to destination: Position, completion: @escaping () -> Void) {
-		renderer.move(from: source, to: destination, completion: completion)
-	}
-}
-
-// MARK: Gestures
-extension ViewController {
-	func setupGestures() {
-		let left = UISwipeGestureRecognizer(target: self, action: #selector(swipedLeft))
-		left.direction = .left
-		let right = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
-		right.direction = .right
-		let up = UISwipeGestureRecognizer(target: self, action: #selector(swipedUp))
-		up.direction = .up
-		let down = UISwipeGestureRecognizer(target: self, action: #selector(swipedDown))
-		down.direction = .down
-		
-		self.view.addGestureRecognizer(left)
-		self.view.addGestureRecognizer(right)
-		self.view.addGestureRecognizer(up)
-		self.view.addGestureRecognizer(down)
-	}
-	// MARK: left
-	@objc func swipedLeft() {
-		manager.shift(to: .left)
-
-	}
-
-	// MARK: right
-	@objc func swipedRight() {
-		manager.shift(to: .right)
-	}
-
-	// MARK: up
-	@objc func swipedUp() {
-		manager.shift(to: .up)
-	}
-
-	// MARK: down
-	@objc func swipedDown() {
-		manager.shift(to: .down)
-	}
-}
-
 
