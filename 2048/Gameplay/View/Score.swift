@@ -11,56 +11,77 @@ import UIKit
 class Score: UIView {
 	var label: UILabel
 	var score: UILabel
-	var plusScoreView: UILabel
+
+	var plusScoreAnimationFinished = true
+	private var plusScoreQueue = Queue<Int>()
 
 	var value: Int = 0 {
 		didSet {
 			score.text = String(value)
-			if value - oldValue > 0 {
-				plusScoreView.isHidden = false
-				plusScoreView.text = "+\(value - oldValue)"
-				let oldOrigin = plusScoreView.frame.origin
-				let oldAlpha = plusScoreView.alpha
-				UIView.animate(withDuration: 0.5, animations: {
-					self.plusScoreView.frame.origin.y = self.score.center.y + 10
-					self.plusScoreView.alpha = 0
-				}, completion: { (_) in
-					self.plusScoreView.isHidden = true
-					self.plusScoreView.frame.origin = oldOrigin
-					self.plusScoreView.alpha = oldAlpha
-				})
+			let difference = value - oldValue
+			if difference > 0 {
+				if (self.plusScoreAnimationFinished){
+					self.plusScoreAnimation(with: self.newPlusScoreView(for: difference))
+				} else {
+					self.plusScoreQueue.enqueue(difference)
+				}
 			}
+		}
+	}
+
+	private func plusScoreAnimation(with plusScoreView: UILabel) {
+		plusScoreAnimationFinished = false
+		plusScoreView.isHidden = false
+		let oldOrigin = plusScoreView.frame.origin
+		let oldAlpha = plusScoreView.alpha
+		UIView.animate(withDuration: 0.5, animations: {
+			plusScoreView.frame.origin.y = self.score.center.y + 10
+			plusScoreView.alpha = 0
+		}, completion: { (isFinished) in
+			plusScoreView.isHidden = true
+			plusScoreView.frame.origin = oldOrigin
+			plusScoreView.alpha = oldAlpha
+			self.plusScoreAnimationFinished = true
+			plusScoreView.removeFromSuperview()
+		})
+		if (!plusScoreQueue.isEmpty) {
+			plusScoreAnimation(with: self.newPlusScoreView(for: plusScoreQueue.dequeue()!))
 		}
 	}
 
 	override init(frame: CGRect) {
 		label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 2 ))
 		score = UILabel(frame: CGRect(x: 0, y: label.frame.height, width: frame.width, height: frame.height - label.frame.height))
-		let delta = 10
-		let plusScoreViewSize = CGSize(width: score.frame.width - CGFloat(delta), height: score.frame.height / 3)
-		plusScoreView = UILabel(frame: CGRect(origin: CGPoint(x: score.frame.maxX - plusScoreViewSize.width - CGFloat(delta) / 2, y: score.frame.maxY - plusScoreViewSize.height - CGFloat(delta) / 2), size: plusScoreViewSize))
+
 		super.init(frame: frame)
 
 		setupLabel()
 		setupScore()
-		setupPlusScore()
-
 
 		addSubview(score)
 		addSubview(label)
-		addSubview(plusScoreView)
-		bringSubview(toFront: plusScoreView)
 
 		self.backgroundColor = App.board.color
 		self.layer.cornerRadius = Board.radius
 	}
 
-	private func setupPlusScore() {
-		plusScoreView.text = ""
+
+	private func newPlusScoreView(for value: Int) -> UILabel {
+		let delta = 10
+		let plusScoreViewSize = CGSize(width: score.frame.width - CGFloat(delta), height: score.frame.height * 0.4)
+		let plusScoreView = UILabel(frame: CGRect(origin: CGPoint(x: score.frame.maxX - plusScoreViewSize.width - CGFloat(delta) / 2, y: score.frame.maxY - plusScoreViewSize.height - CGFloat(delta) / 2), size: plusScoreViewSize))
+		plusScoreView.text = "+\(value)"
 		plusScoreView.textAlignment = .right
 		plusScoreView.backgroundColor = UIColor.clear
 		plusScoreView.textColor = App.plusText.color
-		plusScoreView.font = UIFont(name: "Helvetica-Bold", size: 15)
+		plusScoreView.font = UIFont(name: "Helvetica-Bold", size: 13)
+		plusScoreView.numberOfLines = 1
+		plusScoreView.minimumScaleFactor = 10 / plusScoreView.font.pointSize
+		plusScoreView.adjustsFontSizeToFitWidth = true
+
+		addSubview(plusScoreView)
+		bringSubview(toFront: plusScoreView)
+		return plusScoreView
 	}
 
 	private func setupLabel() {

@@ -12,6 +12,7 @@
 		A19470801F5B586600D13CA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A194707E1F5B586600D13CA2 /* LaunchScreen.storyboard */; };
 		A1F698C42008CE9B00D5EC1E /* ViewControllerGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F698C32008CE9B00D5EC1E /* ViewControllerGestures.swift */; };
 		A1F698C62008CED500D5EC1E /* ViewControllerGameSource+GameLogicManagerDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F698C52008CED500D5EC1E /* ViewControllerGameSource+GameLogicManagerDelegates.swift */; };
+		A1F698CA2008D9B400D5EC1E /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F698C92008D9B400D5EC1E /* Queue.swift */; };
 		A1FE323C1F79BBE7005833B8 /* RestartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32321F79BBE6005833B8 /* RestartButton.swift */; };
 		A1FE323D1F79BBE7005833B8 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32331F79BBE6005833B8 /* HighScore.swift */; };
 		A1FE323E1F79BBE7005833B8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32341F79BBE6005833B8 /* Board.swift */; };
@@ -41,6 +42,7 @@
 		A19470811F5B586600D13CA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1F698C32008CE9B00D5EC1E /* ViewControllerGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGestures.swift; sourceTree = "<group>"; };
 		A1F698C52008CED500D5EC1E /* ViewControllerGameSource+GameLogicManagerDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewControllerGameSource+GameLogicManagerDelegates.swift"; sourceTree = "<group>"; };
+		A1F698C92008D9B400D5EC1E /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		A1FE32321F79BBE6005833B8 /* RestartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestartButton.swift; path = 2048/Gameplay/View/RestartButton.swift; sourceTree = SOURCE_ROOT; };
 		A1FE32331F79BBE6005833B8 /* HighScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HighScore.swift; path = 2048/Gameplay/View/HighScore.swift; sourceTree = SOURCE_ROOT; };
 		A1FE32341F79BBE6005833B8 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = 2048/Gameplay/View/Board.swift; sourceTree = SOURCE_ROOT; };
@@ -120,6 +122,7 @@
 				A1FE32541F79BCBC005833B8 /* Tile.swift */,
 				A1FE32561F79BCBC005833B8 /* TileModel+CoreDataClass.swift */,
 				A1FE32571F79BCBC005833B8 /* TileModel+CoreDataProperties.swift */,
+				A1F698C92008D9B400D5EC1E /* Queue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				A1FE324C1F79BC16005833B8 /* GameLogicManager.swift in Sources */,
 				A1FE32411F79BBE7005833B8 /* TileView.swift in Sources */,
 				A1F698C62008CED500D5EC1E /* ViewControllerGameSource+GameLogicManagerDelegates.swift in Sources */,
+				A1F698CA2008D9B400D5EC1E /* Queue.swift in Sources */,
 				A1FE325D1F79BCBC005833B8 /* TileModel+CoreDataProperties.swift in Sources */,
 				A1FE32581F79BCBC005833B8 /* _048.xcdatamodeld in Sources */,
 				A1F698C42008CE9B00D5EC1E /* ViewControllerGestures.swift in Sources */,

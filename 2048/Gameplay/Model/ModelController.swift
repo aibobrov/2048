@@ -15,17 +15,30 @@ class ModelController {
 	enum Key {
 
 		case highScore(for: Int)
+		case currentScore(for: Int)
 
 		var key: String {
 			switch self {
-			case .highScore(let dimention):
-				return "HighScore \(dimention)"
+				case .highScore(let dimention):
+					return "HighScore \(dimention)"
+				case .currentScore(let dimention):
+					return "CurrentScore \(dimention)"
 			}
+
 		}
 	}
 
 	static let shared = ModelController()
-	
+
+	func save(currentScore: Int, for dimention: Int) {
+		UserDefaults.standard.set(currentScore, forKey: Key.currentScore(for: dimention).key)
+	}
+
+	func loadCurrentScore(for dimention: Int) -> Int {
+		return UserDefaults.standard.integer(forKey: Key.currentScore(for: dimention).key)
+	}
+
+
 	func save(highScore: Int, for dimention: Int) {
 		UserDefaults.standard.set(highScore, forKey: Key.highScore(for: dimention).key)
 	}

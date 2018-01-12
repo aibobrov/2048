@@ -15,7 +15,9 @@ class ViewController: UIViewController {
 	var renderer: GameBoardRenderer!
 	var restartButton: RestartButton!
 
-	var dimension = 4
+	var dimensions : Int {
+		return 4
+	}
 
 	var extraSpace: CGFloat { // constant
 		return 13
@@ -27,7 +29,7 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setDimention(to: dimension)
+		setDimention(to: dimensions)
 		setupGestures()
 		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension))
 	}
@@ -61,6 +63,7 @@ class ViewController: UIViewController {
 
 		let scoreSize = CGSize(width: 100, height: 50)
 		score = Score(frame: CGRect(origin: CGPoint.zero, size: scoreSize))
+		score.value = ModelController.shared.loadCurrentScore(for: dimension)
 		score.translatesAutoresizingMaskIntoConstraints = false
 		self.view.addSubview(score)
 		score.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true

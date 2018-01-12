@@ -32,10 +32,12 @@ extension ViewController: GameLogicManagerDelegate {
 
 	func scoreDidChanged(to score: Int) {
 		self.score.value = score
+		ModelController.shared.save(highScore: score, for: manager.dimension)
 		if highScore.value < score {
 			self.highScore.value = score
 			ModelController.shared.save(highScore: score, for: manager.dimension)
 		}
+
 	}
 
 	func userDidWon() {

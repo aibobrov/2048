@@ -87,7 +87,7 @@ enum App {
 		case .text:
 			return UIColor(white: 1, alpha: 0.7)
 		case .plusText:
-			return UIColor(red:0.91, green:0.87, blue:0.82, alpha: 0.5)
+			return UIColor(red:0.93, green:0.9, blue:0.85, alpha: 0.7)
 		}
 	}
 }
