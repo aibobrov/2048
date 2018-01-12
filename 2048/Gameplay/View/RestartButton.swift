@@ -16,7 +16,7 @@ class RestartButton: UIButton {
 		super.init(frame: frame)
 		self.backgroundColor = App.board.color
 		self.layer.cornerRadius = Board.radius
-		setTitle("restart", for: .normal)
+		setTitle("Restart", for: .normal)
 		setTitleColor(App.text.color, for: .normal)
 		titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 17)
 		titleLabel?.numberOfLines = 1

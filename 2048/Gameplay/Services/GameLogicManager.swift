@@ -72,12 +72,17 @@ class GameLogicManager {
 		refreshNeighborTiles()
 	}
 
-	func start(with tiles: [Tile]) {
+	func restart() {
+		reset()
+		start()
+	}
+
+	func start(with tiles: [Tile], score: Int) {
 		guard tiles.filter({$0.value != nil}).count != 0 else {
 			start()
 			return
 		}
-		reset()
+		self.score = score
 		self.tiles = tiles
 		for tile in  tiles.filter({$0.value != nil}) {
 			delegate?.didCreatedTile(tile)
