@@ -52,8 +52,9 @@ class ModelController {
 		deleteAllTiles()
 		for tile in tiles {
 			let tileModel = TileModel(context: context)
-			tileModel.position = Int16(tile.position.x * dimension + tile.position.y)
-			tileModel.value = Int64(tile.value ?? 0)
+			tileModel.positionX = Int16(tile.position.x)
+			tileModel.positionY = Int16(tile.position.y)
+			tileModel.tileValue = Int32(tile.value ?? 0)
 			saveContext()
 		}
 	}
@@ -65,15 +66,12 @@ class ModelController {
 		do {
 			let tileModels = try context.fetch(fetchRequest)
 			for tileModel in tileModels {
-				let position : Int = Int(tileModel.position)
-				let value: Int = Int(tileModel.value)
-				if tileModel.value == 0 {
-					tiles.append(Tile(position: Position(position / dimension, position % dimension), value: nil))
+				if tileModel.tileValue == 0 {
+					tiles.append(Tile(position: Position(Int(tileModel.positionX), Int(tileModel.positionY)), value: nil))
 				} else {
-					tiles.append(Tile(position: Position(position / dimension, position % dimension), value: value))
+					tiles.append(Tile(position: Position(Int(tileModel.positionX), Int(tileModel.positionY)), value: Int(tileModel.tileValue)))
 				}
 			}
-
 		} catch {}
 
 		return tiles

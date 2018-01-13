@@ -2,8 +2,8 @@
 //  TileModel+CoreDataProperties.swift
 //  2048
 //
-//  Created by Artem Bobrov on 25.09.17.
-//  Copyright © 2017 Artem Bobrov. All rights reserved.
+//  Created by Artem Bobrov on 13.01.2018.
+//  Copyright © 2018 Artem Bobrov. All rights reserved.
 //
 //
 
@@ -17,6 +17,8 @@ extension TileModel {
         return NSFetchRequest<TileModel>(entityName: "TileModel")
     }
 
-    @NSManaged public var position: Int16
-    @NSManaged public var value: Int64
+    @NSManaged public var positionX: Int16
+    @NSManaged public var tileValue: Int32
+    @NSManaged public var positionY: Int16
+
 }
