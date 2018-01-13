@@ -47,7 +47,8 @@ class ViewController: UIViewController {
 	private func setDimention(to dimension: Int) {
 		self.clearSubviews()
 
-		let board = Board(dimension: dimension, offsetBtwTiles: extraSpace, boardSize: CGSize(width: self.view.frame.width - (extraSpace + 1) * 2, height: self.view.frame.width - (extraSpace + 1) * 2))
+		let boardSize = CGSize(width: self.view.frame.width - (extraSpace + 1) * 2, height: self.view.frame.width - (extraSpace + 1) * 2)
+		let board = Board(dimension: dimension, offsetBtwTiles: extraSpace, boardSize: boardSize)
 		board.translatesAutoresizingMaskIntoConstraints = false
 		self.view.addSubview(board)
 		board.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true

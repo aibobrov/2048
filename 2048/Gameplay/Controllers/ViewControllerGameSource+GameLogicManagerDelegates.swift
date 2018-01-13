@@ -22,7 +22,7 @@ extension ViewController: GameLogicManagerDelegate {
 	}
 
 	func userDidLost() {
-		let alert = UIAlertController(title: "You Lost", message: "Try next time!", preferredStyle: .alert)
+		let alert = UIAlertController(title: "You've Lost", message: "Try next time!", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Restart", style: .default, handler: { _ in
 			self.renderer.reset()
 			self.manager.restart()
