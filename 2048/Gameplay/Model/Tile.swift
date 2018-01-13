@@ -13,10 +13,10 @@ class Tile {
 	let position: Position
 	var value: Int?
 
-	var upTile: Tile?
-	var rightTile: Tile?
-	var bottomTile: Tile?
-	var leftTile: Tile?
+	weak var upTile: Tile?
+	weak var rightTile: Tile?
+	weak var bottomTile: Tile?
+	weak var leftTile: Tile?
 
 	init(position: Position, value: Int? = nil) {
 		self.position = position
