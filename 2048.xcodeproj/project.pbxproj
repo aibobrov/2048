@@ -19,6 +19,7 @@
 		A1F699762009851D00D5EC1E /* HighScoreModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F699702009851D00D5EC1E /* HighScoreModel+CoreDataProperties.swift */; };
 		A1F69979200986C400D5EC1E /* TileModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F69977200986C400D5EC1E /* TileModel+CoreDataClass.swift */; };
 		A1F6997A200986C400D5EC1E /* TileModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F69978200986C400D5EC1E /* TileModel+CoreDataProperties.swift */; };
+		A1F6997E200AADC200D5EC1E /* ResistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F6997D200AADC200D5EC1E /* ResistanceService.swift */; };
 		A1FE323C1F79BBE7005833B8 /* RestartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32321F79BBE6005833B8 /* RestartButton.swift */; };
 		A1FE323D1F79BBE7005833B8 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32331F79BBE6005833B8 /* HighScore.swift */; };
 		A1FE323E1F79BBE7005833B8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FE32341F79BBE6005833B8 /* Board.swift */; };
@@ -53,6 +54,7 @@
 		A1F699702009851D00D5EC1E /* HighScoreModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HighScoreModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A1F69977200986C400D5EC1E /* TileModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A1F69978200986C400D5EC1E /* TileModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A1F6997D200AADC200D5EC1E /* ResistanceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResistanceService.swift; sourceTree = "<group>"; };
 		A1FE32321F79BBE6005833B8 /* RestartButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestartButton.swift; path = 2048/Gameplay/View/RestartButton.swift; sourceTree = SOURCE_ROOT; };
 		A1FE32331F79BBE6005833B8 /* HighScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HighScore.swift; path = 2048/Gameplay/View/HighScore.swift; sourceTree = SOURCE_ROOT; };
 		A1FE32341F79BBE6005833B8 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = 2048/Gameplay/View/Board.swift; sourceTree = SOURCE_ROOT; };
@@ -124,6 +126,7 @@
 		A19470891F5B58A400D13CA2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A1F6997D200AADC200D5EC1E /* ResistanceService.swift */,
 				A1F6996A2009842A00D5EC1E /* CoreDataClasses+Properties */,
 				A1FE32551F79BCBC005833B8 /* ModelController.swift */,
 				A1FE32511F79BCBC005833B8 /* _048.xcdatamodeld */,
@@ -282,6 +285,7 @@
 				A1FE324B1F79BC16005833B8 /* GameLogicManagerDelegate.swift in Sources */,
 				A1FE323F1F79BBE7005833B8 /* Score.swift in Sources */,
 				A1FE323C1F79BBE7005833B8 /* RestartButton.swift in Sources */,
+				A1F6997E200AADC200D5EC1E /* ResistanceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

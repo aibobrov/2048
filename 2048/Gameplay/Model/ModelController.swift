@@ -51,11 +51,11 @@ class ModelController {
 	func save(dimension: Int, tiles: [Tile]) {
 		deleteAllTiles()
 		for tile in tiles {
-			let tileModel = TileModel(context: context)
+			let tileModel = TileModel(context: ResistanceService.context)
 			tileModel.positionX = Int16(tile.position.x)
 			tileModel.positionY = Int16(tile.position.y)
 			tileModel.tileValue = Int32(tile.value ?? 0)
-			saveContext()
+			ResistanceService.saveContext()
 		}
 	}
 
@@ -64,7 +64,7 @@ class ModelController {
 		let fetchRequest: NSFetchRequest<TileModel> = TileModel.fetchRequest()
 		var tiles = [Tile]()
 		do {
-			let tileModels = try context.fetch(fetchRequest)
+			let tileModels = try ResistanceService.context.fetch(fetchRequest)
 			for tileModel in tileModels {
 				if tileModel.tileValue == 0 {
 					tiles.append(Tile(position: Position(Int(tileModel.positionX), Int(tileModel.positionY)), value: nil))
@@ -78,7 +78,7 @@ class ModelController {
 	}
 
 	func deleteAllTiles() {
-		let context = self.context
+		let context = ResistanceService.context
 		let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TileModel")
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
 		do {
@@ -86,33 +86,6 @@ class ModelController {
 			try context.save()
 		}
 		catch{}
-	}
-
-	// MARK: - Core Data stack
-	var context: NSManagedObjectContext {
-		return persistentContainer.viewContext
-	}
-
-	lazy var persistentContainer: NSPersistentContainer = {
-		let container = NSPersistentContainer(name: "_048")
-		container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-			if let error = error as NSError? {
-				fatalError("Unresolved error \(error), \(error.userInfo)")
-			}
-		})
-		return container
-	}()
-
-	// MARK: - Core Data Saving support
-	func saveContext () {
-		if context.hasChanges {
-			do {
-				try context.save()
-			} catch {
-				let nserror = error as NSError
-				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-			}
-		}
 	}
 
 }
