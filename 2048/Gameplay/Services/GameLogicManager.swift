@@ -151,6 +151,7 @@ class GameLogicManager {
 		var waitForSignalToContinue = false
 
 		var performedShift = false
+		var reachedWinValue = false
 		for rowOrColumn in 0..<dimension {
 			var tilesToCheck = tiles.filter {
 				return ((direction == .right || direction == .left) ? $0.position.x : $0.position.y) == rowOrColumn
@@ -181,8 +182,7 @@ class GameLogicManager {
 						moveOnSameTile(from: otherTile, to: currentTile)
 						score += currentTile.value!
 						if currentTile.value! == winTileValue {
-							delegate?.userDidWon()
-							return
+							reachedWinValue = true
 						}
 						performedShift = true
 					} else if currentTile.value == nil {
@@ -201,6 +201,10 @@ class GameLogicManager {
 			sourceDelegate?.boardValuesChanged(to: self.tiles)
 		} else {
 			delegate?.nothingChangedShift(to: direction)
+		}
+		// Announce the win only after the entire move has been saved.
+		if reachedWinValue && !isUserWon {
+			isUserWon = true
 		}
 		isUserLost = isGameOver()
 
