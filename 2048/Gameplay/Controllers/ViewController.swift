@@ -29,13 +29,13 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setDimention(to: dimensions)
+		setDimension(to: dimensions)
 		setupGestures()
 		manager.start(with: ModelController.shared.loadTiles(dimension: manager.dimension), score: score.value)
 	}
 
 	@objc private func restartGame() {
-		let alert = UIAlertController(title: "Are sure to start new game?", message: "Current results will be lost", preferredStyle: .alert)
+		let alert = UIAlertController(title: "Are you sure you want to start a new game?", message: "Current results will be lost", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
 			self.renderer.reset()
 			self.manager.start()
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
 		self.present(alert, animated: true, completion: nil)
 	}
 
-	private func setDimention(to dimension: Int) {
+	private func setDimension(to dimension: Int) {
 		self.clearSubviews()
 
 		let boardSize = CGSize(width: self.view.frame.width - (extraSpace + 1) * 2, height: self.view.frame.width - (extraSpace + 1) * 2)

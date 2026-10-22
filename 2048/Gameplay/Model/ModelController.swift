@@ -19,10 +19,10 @@ class ModelController {
 
 		var key: String {
 			switch self {
-				case .highScore(let dimention):
-					return "HighScore \(dimention)"
-				case .currentScore(let dimention):
-					return "CurrentScore \(dimention)"
+				case .highScore(let dimension):
+					return "HighScore \(dimension)"
+				case .currentScore(let dimension):
+					return "CurrentScore \(dimension)"
 			}
 
 		}
@@ -30,21 +30,21 @@ class ModelController {
 
 	static let shared = ModelController()
 
-	func save(currentScore: Int, for dimention: Int) {
-		UserDefaults.standard.set(currentScore, forKey: Key.currentScore(for: dimention).key)
+	func save(currentScore: Int, for dimension: Int) {
+		UserDefaults.standard.set(currentScore, forKey: Key.currentScore(for: dimension).key)
 	}
 
-	func loadCurrentScore(for dimention: Int) -> Int {
-		return UserDefaults.standard.integer(forKey: Key.currentScore(for: dimention).key)
+	func loadCurrentScore(for dimension: Int) -> Int {
+		return UserDefaults.standard.integer(forKey: Key.currentScore(for: dimension).key)
 	}
 
 
-	func save(highScore: Int, for dimention: Int) {
-		UserDefaults.standard.set(highScore, forKey: Key.highScore(for: dimention).key)
+	func save(highScore: Int, for dimension: Int) {
+		UserDefaults.standard.set(highScore, forKey: Key.highScore(for: dimension).key)
 	}
 
-	func loadHighScore(for dimention: Int) -> Int {
-		return UserDefaults.standard.integer(forKey: Key.highScore(for: dimention).key)
+	func loadHighScore(for dimension: Int) -> Int {
+		return UserDefaults.standard.integer(forKey: Key.highScore(for: dimension).key)
 	}
 
 
